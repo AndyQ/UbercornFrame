@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  GameFrame
+//  UbercornFrame
 //
 //  Created by Andy Qua on 19/11/2018.
 //  Copyright © 2018 Andy Qua. All rights reserved.
@@ -16,12 +16,14 @@ extension CGFloat {
 }
 
 class ViewController: UIViewController {
+    static let menuItems = ["New file", "Load file", "Save file", "Disconnect from Ubercorn Frame", "Connect to Ubercorn Frame", "Settings"]
 
     @IBOutlet weak var verticalStackView: UIStackView!
     @IBOutlet weak var paletteView: PaletteView!
 
     @IBOutlet weak var frameLabel: UILabel!
     @IBOutlet weak var frameDelayLabel: UILabel!
+    @IBOutlet weak var connectedLabel: UILabel!
 
     var cells = [[UIView]]()
 
@@ -66,7 +68,7 @@ class ViewController: UIViewController {
             let controller = ArrayChoiceTableViewController(items) { [unowned self] (name) in
                 self.paletteView.setPalette(name: name)
             }
-            controller.preferredContentSize = CGSize(width: 200, height: 500)
+//            controller.preferredContentSize = CGSize(width: 200, height: 500)
             self.showPopup(controller, sourceView: self.paletteView )
         }
         paletteView.setPalette(name: PaletteManager.instance.initialPalette )
@@ -152,7 +154,13 @@ extension ViewController {
     
 
     @IBAction func didSelectMenu( _ sender: Any ) {
-        let items = ["New file", "Load file", "Save file", "Connect to GameFrame"]
+        var items = ViewController.menuItems
+        if remoteServer.isConnected {
+            items.removeAll() { $0.hasPrefix("Connect")}
+        } else {
+            items.removeAll() { $0.hasPrefix("Disconnect")}
+        }
+        
         let controller = ArrayChoiceTableViewController(items) { [unowned self] (name) in
             if name == "New file" {
                 self.setFrames( frames: [ImageFrame()] )
@@ -160,21 +168,37 @@ extension ViewController {
                 self.loadFile()
             } else if name == "Save file" {
                 self.saveFile("image.gif")
-            } else if name == "Connect to GameFrame" {
-                self.connectToGameFrame()
+            } else if name == "Connect to Ubercorn Frame" {
+                self.connectToUbercornFrame()
+            } else if name == "Disconnect from Ubercorn Frame" {
+                self.disconnectFromUbercornFrame()
+            } else if name == "Settings" {
+                self.performSegue(withIdentifier: "showSettings", sender: self)
             }
         }
-        controller.preferredContentSize = CGSize(width: 100, height: 200)
+        
         self.showPopup(controller, sourceView: sender as! UIBarButtonItem )
     }
 }
 
 // MARK: Remote comms
 extension ViewController {
-    func connectToGameFrame() {
-        remoteServer.connect()
-    }
+    func connectToUbercornFrame() {
+        let d = UserDefaults.standard
+        let hostName = d.string(forKey: "hostName") ?? ""
+        let port = d.integer(forKey: "port")
 
+        if hostName == "" || port <= 0 {
+            self.performSegue(withIdentifier: "showSettings", sender: self)
+        } else {
+            remoteServer.connect(hostName: hostName, port:port)
+        }
+    }
+    
+    func disconnectFromUbercornFrame() {
+        remoteServer.disconnect()
+    }
+    
     func sendPixelChange( x: Int, y: Int, color : UIColor ) {
         if let rgb = color.rgb() {
             let cmd = "SET \(x) \(y) \(rgb[0]) \(rgb[1]) \(rgb[2])"

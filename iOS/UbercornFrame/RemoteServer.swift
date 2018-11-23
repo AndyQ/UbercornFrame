@@ -1,6 +1,6 @@
 //
 //  RemoteServer.swift
-//  GameFrame
+//  UbercornFrame
 //
 //  Created by Andy Qua on 22/11/2018.
 //  Copyright © 2018 Andy Qua. All rights reserved.
@@ -11,18 +11,25 @@ import Starscream
 class RemoteServer {
 
 
-    var socket : WebSocket!
+    var socket : WebSocket?
+    
+    var isConnected : Bool {
+        return socket != nil && socket!.isConnected
+    }
     
     init() {
         
     }
     
-    func connect() {
-//        socket = WebSocket(url: URL(string: "ws://localhost:8765/")!)
-        socket = WebSocket(url: URL(string: "ws://display.local:8765/")!)
-        socket.delegate = self
-        socket.connect()
-
+    func connect( hostName : String, port: Int) {
+        socket = WebSocket(url: URL(string: "ws://\(hostName):\(port)/")!)
+        socket?.delegate = self
+        socket?.connect()
+    }
+    
+    func disconnect() {
+        socket?.disconnect()
+        socket = nil
     }
     
     func sendCommand( _ cmd : String ) {

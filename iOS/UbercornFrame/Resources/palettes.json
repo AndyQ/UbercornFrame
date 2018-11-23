@@ -1,5 +1,5 @@
 {
-    "palette_ms_paint" : [
+    "MSPaint" : [
         "#ff000000",
         "#ff888888",
         "#ff870000",
@@ -17,7 +17,7 @@
         "#ff4100ff",
         "#ffff4cff"
     ],
-    "palette_nes1" : [
+    "NES 1" : [
         "#ff7c7c7c",
         "#ff0000fc",
         "#ff0000bc",
@@ -35,7 +35,7 @@
         "#ff000000",
         "#ff000000"
     ],
-    "palette_apple_II" : [
+    "Apple II" : [
         "#ff000000",
         "#ff722640",
         "#ff40337f",
@@ -53,7 +53,7 @@
         "#ff8dd9bf",
         "#ffffffff"
     ],
-    "palette_c64" : [
+    "C64" : [
         "#000000",
         "#FFFFFF",
         "#880000",
@@ -71,7 +71,7 @@
         "#0088FF",
         "#BBBBBB"
     ],
-    "palette_c642" : [
+    "C642" : [
         "#ff000000",
         "#ffffffff",
         "#ff883932",
@@ -89,7 +89,7 @@
         "#ff7869c4",
         "#ff9f9f9f"
     ],
-    "palette_cga" : [
+    "CGA" : [
         "#ff000000",
         "#ff0000aa",
         "#ff00aa00",
@@ -107,7 +107,7 @@
         "#ffffff55",
         "#ffffffff"
     ],
-    "palette_empty" : [
+    "Empty" : [
         "#ffffffff",
         "#ffffffff",
         "#ffffffff",
@@ -125,7 +125,7 @@
         "#ffffffff",
         "#ffffffff"
     ],
-    "palette_gameboy" : [
+    "Gameboy" : [
         "#ff0f380f",
         "#ff0f380f",
         "#ff3b6b2c",
@@ -143,7 +143,7 @@
         "#ffffffff",
         "#ffffffff"
     ],
-    "palette_msx" : [
+    "MSX" : [
         "#00000000",
         "#ff000000",
         "#ff3eb849",
@@ -161,7 +161,7 @@
         "#ffcccccc",
         "#ffffffff"
     ],
-    "palette_nes2" : [
+    "NES 2" : [
         "#ffbcbcbc",
         "#ff0078f8",
         "#ff0058f8",
@@ -179,7 +179,7 @@
         "#ff000000",
         "#ff000000"
     ],
-    "palette_nes3" : [
+    "NES 3" : [
         "#fff8f8f8",
         "#ff3cbcfc",
         "#ff6888fc",
@@ -197,7 +197,7 @@
         "#ff000000",
         "#ff000000"
     ],
-    "palette_nes4" : [
+    "NES 4" : [
         "#fffcfcfc",
         "#ffa4e4fc",
         "#ffb8b8f8",
@@ -215,7 +215,7 @@
         "#ff000000",
         "#ff000000"
     ],
-    "palette_zx_spectrum" : [
+    "ZX Spectrum" : [
         "#ff000000",
         "#ff0000aa",
         "#ffaa0000",

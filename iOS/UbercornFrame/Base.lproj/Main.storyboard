@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Game Frame-->
+        <!--Ubercorn Frame-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="GameFrame" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="UbercornFrame" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -25,7 +25,7 @@
                                     <constraint firstAttribute="width" secondItem="n7W-nt-Kk7" secondAttribute="height" multiplier="1:1" id="zkT-EB-Qmp"/>
                                 </constraints>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4RE-rg-3V5" customClass="PaletteView" customModule="GameFrame" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4RE-rg-3V5" customClass="PaletteView" customModule="UbercornFrame" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="603.66666666666663" width="375" height="110"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e73-dh-A7E">
@@ -47,49 +47,63 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hkF-5C-rqK">
                                 <rect key="frame" x="319" y="173.66666666666666" width="36" height="30"/>
-                                <state key="normal" title="Clear"/>
+                                <state key="normal" title="Clear">
+                                    <color key="titleColor" red="0.22352941179999999" green="0.35686274509999999" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="clearPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Pjk-zz-rFV"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GsV-4V-wxC">
-                                <rect key="frame" x="28" y="173.66666666666666" width="30" height="30"/>
-                                <state key="normal" title="Add"/>
+                                <rect key="frame" x="20" y="173.66666666666666" width="30" height="30"/>
+                                <state key="normal" title="Add">
+                                    <color key="titleColor" red="0.22352941179999999" green="0.35686274509999999" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="addFramePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3uP-Gp-gl8"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GyZ-4A-VFs">
-                                <rect key="frame" x="28" y="135" width="30" height="30"/>
-                                <state key="normal" title="Play"/>
+                                <rect key="frame" x="20" y="135" width="30" height="30"/>
+                                <state key="normal" title="Play">
+                                    <color key="titleColor" red="0.22352941179999999" green="0.35686274509999999" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="playPausePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pJZ-zB-mvc"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xeu-5L-uHm">
-                                <rect key="frame" x="73" y="173.66666666666666" width="30" height="30"/>
-                                <state key="normal" title="Dup"/>
+                                <rect key="frame" x="65" y="173.66666666666666" width="30" height="30"/>
+                                <state key="normal" title="Dup">
+                                    <color key="titleColor" red="0.22352941179999999" green="0.35686274509999999" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="duplicateFramePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Ur-mA-Rzr"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="psX-gY-Jbm">
-                                <rect key="frame" x="118" y="173.66666666666666" width="30" height="30"/>
-                                <state key="normal" title="Del"/>
+                                <rect key="frame" x="110" y="173.66666666666666" width="30" height="30"/>
+                                <state key="normal" title="Del">
+                                    <color key="titleColor" red="0.22352941179999999" green="0.35686274509999999" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="deleteFramePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KeH-JE-Fow"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yBg-9X-q2I">
                                 <rect key="frame" x="213" y="173.66666666666666" width="31" height="30"/>
-                                <state key="normal" title="Prev"/>
+                                <state key="normal" title="Prev">
+                                    <color key="titleColor" red="0.22352941179999999" green="0.35686274509999999" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="prevFramePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vRl-5C-P5o"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rZ0-6U-L47">
                                 <rect key="frame" x="259" y="173.66666666666666" width="32" height="30"/>
-                                <state key="normal" title="Next"/>
+                                <state key="normal" title="Next">
+                                    <color key="titleColor" red="0.22352941179999999" green="0.35686274509999999" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="nextFramePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="91o-sG-dx5"/>
                                 </connections>
@@ -153,8 +167,14 @@
                                     <action selector="leftPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gY4-eb-jm7"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connected to Ubercorn Frame" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="poZ-hS-jWM">
+                                <rect key="frame" x="20" y="93" width="172" height="14.333333333333329"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.95294117649999999" blue="0.81960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ZcB-ps-utJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="35" id="3ji-mJ-gdH"/>
                             <constraint firstItem="Xeu-5L-uHm" firstAttribute="centerY" secondItem="GsV-4V-wxC" secondAttribute="centerY" id="4sK-dc-oPE"/>
@@ -165,12 +185,14 @@
                             <constraint firstItem="n7W-nt-Kk7" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="BnX-bQ-jbI"/>
                             <constraint firstItem="ofA-cH-n3t" firstAttribute="leading" secondItem="Klc-XG-wP4" secondAttribute="trailing" constant="5" id="CAc-7t-0yK"/>
                             <constraint firstItem="rZ0-6U-L47" firstAttribute="leading" secondItem="yBg-9X-q2I" secondAttribute="trailing" constant="15" id="CnB-bt-Gck"/>
+                            <constraint firstItem="poZ-hS-jWM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="Cpw-iB-LEy"/>
                             <constraint firstItem="4RE-rg-3V5" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="H1r-n1-Efl"/>
                             <constraint firstItem="4RE-rg-3V5" firstAttribute="top" secondItem="n7W-nt-Kk7" secondAttribute="bottom" constant="10" id="IAT-g4-HMF"/>
                             <constraint firstItem="rZ0-6U-L47" firstAttribute="centerY" secondItem="yBg-9X-q2I" secondAttribute="centerY" id="IAl-a4-Nay"/>
                             <constraint firstItem="psX-gY-Jbm" firstAttribute="leading" secondItem="Xeu-5L-uHm" secondAttribute="trailing" constant="15" id="Kgz-U8-Cdv"/>
                             <constraint firstItem="eSv-8m-YXo" firstAttribute="top" secondItem="Klc-XG-wP4" secondAttribute="bottom" constant="5" id="LQy-G2-jFs"/>
                             <constraint firstItem="GsV-4V-wxC" firstAttribute="top" secondItem="GyZ-4A-VFs" secondAttribute="bottom" constant="8.6666666666666572" id="Mcu-lD-h3G"/>
+                            <constraint firstItem="poZ-hS-jWM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="N84-WM-1KT"/>
                             <constraint firstItem="Xeu-5L-uHm" firstAttribute="leading" secondItem="GsV-4V-wxC" secondAttribute="trailing" constant="15" id="Ok0-Cz-rgM"/>
                             <constraint firstItem="CAx-2b-4sn" firstAttribute="centerY" secondItem="GyZ-4A-VFs" secondAttribute="centerY" id="P06-br-jRP"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="eSv-8m-YXo" secondAttribute="bottom" id="Pgv-P5-18j"/>
@@ -181,7 +203,7 @@
                             <constraint firstItem="EIG-O7-pBM" firstAttribute="leading" secondItem="CAx-2b-4sn" secondAttribute="leading" id="Z3P-6h-DwJ"/>
                             <constraint firstItem="CAx-2b-4sn" firstAttribute="firstBaseline" secondItem="EIG-O7-pBM" secondAttribute="baseline" constant="20" symbolType="layoutAnchor" id="aDi-63-efG"/>
                             <constraint firstItem="CAx-2b-4sn" firstAttribute="leading" secondItem="yBg-9X-q2I" secondAttribute="leading" id="aca-1M-gCf"/>
-                            <constraint firstItem="GsV-4V-wxC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="28" id="gtj-sJ-VyV"/>
+                            <constraint firstItem="GsV-4V-wxC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="gtj-sJ-VyV"/>
                             <constraint firstItem="CxT-Xo-4ay" firstAttribute="centerY" secondItem="EIG-O7-pBM" secondAttribute="centerY" id="iw6-75-4et"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hkF-5C-rqK" secondAttribute="trailing" constant="20" id="jBD-qd-b43"/>
                             <constraint firstItem="GsV-4V-wxC" firstAttribute="leading" secondItem="GyZ-4A-VFs" secondAttribute="leading" id="k3P-MR-3Kh"/>
@@ -194,7 +216,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Game Frame" id="Gpv-Nj-tye">
+                    <navigationItem key="navigationItem" title="Ubercorn Frame" id="Gpv-Nj-tye">
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="u03-7u-OMa">
                             <connections>
                                 <action selector="didSelectMenu:" destination="BYZ-38-t0r" id="H77-Ue-eOw"/>
@@ -202,15 +224,88 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="connectedLabel" destination="poZ-hS-jWM" id="Vlq-sc-yA2"/>
                         <outlet property="frameDelayLabel" destination="20y-kI-HQI" id="Pcu-Gp-Sf4"/>
                         <outlet property="frameLabel" destination="CxT-Xo-4ay" id="44z-5k-eBM"/>
                         <outlet property="paletteView" destination="4RE-rg-3V5" id="ebU-xq-anF"/>
                         <outlet property="verticalStackView" destination="n7W-nt-Kk7" id="QaX-eg-zDs"/>
+                        <segue destination="IM9-MQ-IpI" kind="show" identifier="showSettings" id="6UO-s4-gvb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="996" y="68.7192118226601"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="nKM-ts-qsI">
+            <objects>
+                <viewController title="Settings" id="IM9-MQ-IpI" customClass="SettingsViewController" customModule="UbercornFrame" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Tej-H3-FHn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ubercorn Frame host name or IP address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kfl-P4-SrL">
+                                <rect key="frame" x="16" y="122" width="314" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ycj-kg-YRG">
+                                <rect key="frame" x="16" y="151" width="314" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ubercorn Frame websocket port" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E2W-Gh-tGS">
+                                <rect key="frame" x="16" y="205" width="248" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="8765" borderStyle="roundedRect" placeholder="port" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yl7-9i-nH7">
+                                <rect key="frame" x="272" y="200.66666666666666" width="58" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ry-T8-gpO">
+                                <rect key="frame" x="270" y="250.66666666666663" width="60" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="P8M-m9-Igd"/>
+                                </constraints>
+                                <state key="normal" title="Test">
+                                    <color key="titleColor" red="0.22352941179999999" green="0.35686274509999999" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="testPressed:" destination="IM9-MQ-IpI" eventType="touchUpInside" id="0He-lQ-bU4"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.95294117649999999" blue="0.81960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ycj-kg-YRG" firstAttribute="top" secondItem="kfl-P4-SrL" secondAttribute="bottom" constant="8" id="80F-yR-K9s"/>
+                            <constraint firstItem="EAa-IV-pll" firstAttribute="trailing" secondItem="6ry-T8-gpO" secondAttribute="trailing" constant="45" id="9QC-LV-4Tj"/>
+                            <constraint firstItem="EAa-IV-pll" firstAttribute="trailing" secondItem="Yl7-9i-nH7" secondAttribute="trailing" constant="45" id="FHu-2m-a5D"/>
+                            <constraint firstItem="ycj-kg-YRG" firstAttribute="leading" secondItem="EAa-IV-pll" secondAttribute="leading" constant="16" id="LPe-pJ-Uzv"/>
+                            <constraint firstItem="E2W-Gh-tGS" firstAttribute="leading" secondItem="EAa-IV-pll" secondAttribute="leading" constant="16" id="dzI-aw-uJ2"/>
+                            <constraint firstItem="Yl7-9i-nH7" firstAttribute="centerY" secondItem="E2W-Gh-tGS" secondAttribute="centerY" id="inn-HG-Mn5"/>
+                            <constraint firstItem="Yl7-9i-nH7" firstAttribute="leading" secondItem="E2W-Gh-tGS" secondAttribute="trailing" constant="8" id="md1-2s-mPS"/>
+                            <constraint firstItem="6ry-T8-gpO" firstAttribute="top" secondItem="Yl7-9i-nH7" secondAttribute="bottom" constant="20" id="n8q-Jg-YrC"/>
+                            <constraint firstItem="E2W-Gh-tGS" firstAttribute="top" secondItem="ycj-kg-YRG" secondAttribute="bottom" constant="24" id="qx9-AR-nYP"/>
+                            <constraint firstItem="kfl-P4-SrL" firstAttribute="top" secondItem="EAa-IV-pll" secondAttribute="top" constant="34" id="uLd-k1-qXz"/>
+                            <constraint firstItem="EAa-IV-pll" firstAttribute="trailing" secondItem="ycj-kg-YRG" secondAttribute="trailing" constant="45" id="xxz-sE-NAG"/>
+                            <constraint firstItem="kfl-P4-SrL" firstAttribute="leading" secondItem="EAa-IV-pll" secondAttribute="leading" constant="16" id="zhf-yd-ip1"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EAa-IV-pll"/>
+                    </view>
+                    <connections>
+                        <outlet property="txtHostName" destination="ycj-kg-YRG" id="3tI-oi-0dc"/>
+                        <outlet property="txtPort" destination="Yl7-9i-nH7" id="bz2-3Q-k8o"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f5y-Qu-Ff4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2100" y="-65.024630541871929"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="46M-WK-Vmw">
@@ -220,6 +315,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Cnt-Eu-Drl">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.22352941179999999" green="0.35686274509999999" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

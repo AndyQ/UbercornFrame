@@ -1,6 +1,6 @@
 //
 //  ArrayExt.swift
-//  GameFrame
+//  UbercornFrame
 //
 //  Created by Andy Qua on 21/11/2018.
 //  Copyright © 2018 Andy Qua. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  ArrayChoiceViewController.swift
-//  GameFrame
+//  UbercornFrame
 //
 //  Created by Andy Qua on 20/11/2018.
 //  Copyright © 2018 Andy Qua. All rights reserved.
@@ -30,33 +30,42 @@ class AlwaysPresentAsPopover : NSObject, UIPopoverPresentationControllerDelegate
     
 }
 
-class ArrayChoiceTableViewController<Element> : UITableViewController {
+class ArrayChoiceTableViewController : UITableViewController {
     
-    typealias SelectionHandler = (Element) -> Void
-    typealias LabelProvider = (Element) -> String
+    typealias SelectionHandler = (String) -> Void
     
-    private let values : [Element]
-    private let labels : LabelProvider
+    private let values : [String]
     private let onSelect : SelectionHandler?
     
-    init(_ values : [Element], labels : @escaping LabelProvider = String.init(describing:), onSelect : SelectionHandler? = nil) {
+    init(_ values : [String], onSelect : SelectionHandler? = nil) {
         self.values = values
         self.onSelect = onSelect
-        self.labels = labels
+        
         super.init(style: .plain)
+        self.tableView.isScrollEnabled = false
+        
+        // Calc preferred size
+        let h : CGFloat = CGFloat(min( self.values.count * 44, 500 ))
+        var w : CGFloat = 0
+        let font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body)
+        for str in values {
+            w = max(w, str.width(withConstrainedHeight:44, font:font)+40)
+        }
+        self.preferredContentSize = CGSize(width:min(w, 300), height:h)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return values.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-        cell.textLabel?.text = labels(values[indexPath.row])
+        
+        cell.textLabel!.text = self.values[indexPath.row]
         return cell
     }
     
@@ -64,5 +73,4 @@ class ArrayChoiceTableViewController<Element> : UITableViewController {
         self.dismiss(animated: true)
         onSelect?(values[indexPath.row])
     }
-    
 }

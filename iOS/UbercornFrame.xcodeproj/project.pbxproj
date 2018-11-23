@@ -12,6 +12,9 @@
 		A101F2BE21A5F2DB002C020B /* PaletteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A101F2BD21A5F2DB002C020B /* PaletteManager.swift */; };
 		A101F2C021A6BC05002C020B /* RemoteServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A101F2BF21A6BC05002C020B /* RemoteServer.swift */; };
 		A101F2C221A6E72E002C020B /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A101F2C121A6E72E002C020B /* Animation.swift */; };
+		A101F2C421A82B5C002C020B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A101F2C321A82B5C002C020B /* SettingsViewController.swift */; };
+		A101F2C621A82D63002C020B /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A101F2C521A82D63002C020B /* UIViewControllerExt.swift */; };
+		A11448DF21A84A76009835AA /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11448DE21A84A76009835AA /* StringExt.swift */; };
 		A117D34821A54F7000EDBB5D /* bruce_lee.gif in Resources */ = {isa = PBXBuildFile; fileRef = A117D34721A54F7000EDBB5D /* bruce_lee.gif */; };
 		A117D34A21A5504D00EDBB5D /* ninja.gif in Resources */ = {isa = PBXBuildFile; fileRef = A117D34921A5504D00EDBB5D /* ninja.gif */; };
 		A117D34C21A551BF00EDBB5D /* UIImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A117D34B21A551BF00EDBB5D /* UIImageExt.swift */; };
@@ -38,6 +41,9 @@
 		A101F2BD21A5F2DB002C020B /* PaletteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteManager.swift; sourceTree = "<group>"; };
 		A101F2BF21A6BC05002C020B /* RemoteServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServer.swift; sourceTree = "<group>"; };
 		A101F2C121A6E72E002C020B /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
+		A101F2C321A82B5C002C020B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		A101F2C521A82D63002C020B /* UIViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
+		A11448DE21A84A76009835AA /* StringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
 		A117D34721A54F7000EDBB5D /* bruce_lee.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = bruce_lee.gif; sourceTree = "<group>"; };
 		A117D34921A5504D00EDBB5D /* ninja.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = ninja.gif; sourceTree = "<group>"; };
 		A117D34B21A551BF00EDBB5D /* UIImageExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExt.swift; sourceTree = "<group>"; };
@@ -100,8 +106,9 @@
 			isa = PBXGroup;
 			children = (
 				A14B8CC921A35C3100EC0C4B /* AppDelegate.swift */,
-				A101F2BF21A6BC05002C020B /* RemoteServer.swift */,
 				A14B8CCB21A35C3100EC0C4B /* ViewController.swift */,
+				A101F2C321A82B5C002C020B /* SettingsViewController.swift */,
+				A101F2BF21A6BC05002C020B /* RemoteServer.swift */,
 				A101F2C121A6E72E002C020B /* Animation.swift */,
 				A15BAFF421A5420800B2394A /* ImageFrame.swift */,
 				A101F2BB21A5EF48002C020B /* PaletteView.swift */,
@@ -110,6 +117,8 @@
 				A15BAFEE21A4A72E00B2394A /* UIColorExt.swift */,
 				A15BAFF621A5461200B2394A /* ArrayExt.swift */,
 				A117D34B21A551BF00EDBB5D /* UIImageExt.swift */,
+				A11448DE21A84A76009835AA /* StringExt.swift */,
+				A101F2C521A82D63002C020B /* UIViewControllerExt.swift */,
 				A15BAFF021A4A74400B2394A /* Palette.swift */,
 				A14B8CCD21A35C3100EC0C4B /* Main.storyboard */,
 				A14B8CD021A35C3300EC0C4B /* Assets.xcassets */,
@@ -270,13 +279,16 @@
 				A101F2BE21A5F2DB002C020B /* PaletteManager.swift in Sources */,
 				A101F2C021A6BC05002C020B /* RemoteServer.swift in Sources */,
 				A15BAFEF21A4A72E00B2394A /* UIColorExt.swift in Sources */,
+				A11448DF21A84A76009835AA /* StringExt.swift in Sources */,
 				A117D34C21A551BF00EDBB5D /* UIImageExt.swift in Sources */,
 				A15BAFF321A4B8DC00B2394A /* ArrayChoiceViewController.swift in Sources */,
 				A15BAFF521A5420800B2394A /* ImageFrame.swift in Sources */,
 				A14B8CCA21A35C3100EC0C4B /* AppDelegate.swift in Sources */,
 				A15BAFF721A5461200B2394A /* ArrayExt.swift in Sources */,
 				A15BAFF121A4A74400B2394A /* Palette.swift in Sources */,
+				A101F2C421A82B5C002C020B /* SettingsViewController.swift in Sources */,
 				A101F2C221A6E72E002C020B /* Animation.swift in Sources */,
+				A101F2C621A82D63002C020B /* UIViewControllerExt.swift in Sources */,
 				A101F2BC21A5EF48002C020B /* PaletteView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
