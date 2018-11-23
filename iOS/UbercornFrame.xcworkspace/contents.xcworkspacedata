@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:GameFrame.xcodeproj">
+      location = "group:/Users/andy/dev/ios/Apps/GameFrame/iOS/UbercornFrame.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

@@ -42,7 +42,7 @@
 		A117D34921A5504D00EDBB5D /* ninja.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = ninja.gif; sourceTree = "<group>"; };
 		A117D34B21A551BF00EDBB5D /* UIImageExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExt.swift; sourceTree = "<group>"; };
 		A117D34D21A5798400EDBB5D /* animated.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = animated.gif; sourceTree = "<group>"; };
-		A14B8CC621A35C3100EC0C4B /* GameFrame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameFrame.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A14B8CC621A35C3100EC0C4B /* UbercornFrame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UbercornFrame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A14B8CC921A35C3100EC0C4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A14B8CCB21A35C3100EC0C4B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A14B8CCE21A35C3100EC0C4B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -81,7 +81,7 @@
 		A14B8CBD21A35C3100EC0C4B = {
 			isa = PBXGroup;
 			children = (
-				A14B8CC821A35C3100EC0C4B /* GameFrame */,
+				A14B8CC821A35C3100EC0C4B /* UbercornFrame */,
 				A14B8CC721A35C3100EC0C4B /* Products */,
 				FE63B640464960E016A1244B /* Pods */,
 				8E47854FFABD54B71D7DBD79 /* Frameworks */,
@@ -91,12 +91,12 @@
 		A14B8CC721A35C3100EC0C4B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A14B8CC621A35C3100EC0C4B /* GameFrame.app */,
+				A14B8CC621A35C3100EC0C4B /* UbercornFrame.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A14B8CC821A35C3100EC0C4B /* GameFrame */ = {
+		A14B8CC821A35C3100EC0C4B /* UbercornFrame */ = {
 			isa = PBXGroup;
 			children = (
 				A14B8CC921A35C3100EC0C4B /* AppDelegate.swift */,
@@ -117,7 +117,7 @@
 				A14B8CD521A35C3300EC0C4B /* Info.plist */,
 				A15BAFE921A4A30F00B2394A /* Resources */,
 			);
-			path = GameFrame;
+			path = UbercornFrame;
 			sourceTree = "<group>";
 		};
 		A15BAFE921A4A30F00B2394A /* Resources */ = {
@@ -144,9 +144,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A14B8CC521A35C3100EC0C4B /* GameFrame */ = {
+		A14B8CC521A35C3100EC0C4B /* UbercornFrame */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A14B8CD821A35C3300EC0C4B /* Build configuration list for PBXNativeTarget "GameFrame" */;
+			buildConfigurationList = A14B8CD821A35C3300EC0C4B /* Build configuration list for PBXNativeTarget "UbercornFrame" */;
 			buildPhases = (
 				310267C756E5E6888F2C3F1F /* [CP] Check Pods Manifest.lock */,
 				A14B8CC221A35C3100EC0C4B /* Sources */,
@@ -158,9 +158,9 @@
 			);
 			dependencies = (
 			);
-			name = GameFrame;
+			name = UbercornFrame;
 			productName = GameFrame;
-			productReference = A14B8CC621A35C3100EC0C4B /* GameFrame.app */;
+			productReference = A14B8CC621A35C3100EC0C4B /* UbercornFrame.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -178,7 +178,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A14B8CC121A35C3100EC0C4B /* Build configuration list for PBXProject "GameFrame" */;
+			buildConfigurationList = A14B8CC121A35C3100EC0C4B /* Build configuration list for PBXProject "UbercornFrame" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -191,7 +191,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A14B8CC521A35C3100EC0C4B /* GameFrame */,
+				A14B8CC521A35C3100EC0C4B /* UbercornFrame */,
 			);
 		};
 /* End PBXProject section */
@@ -426,12 +426,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A4ZM73UFF5;
-				INFOPLIST_FILE = GameFrame/Info.plist;
+				INFOPLIST_FILE = UbercornFrame/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.andyqua.GameFrame;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andyqua.UbercornFrame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -445,12 +445,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A4ZM73UFF5;
-				INFOPLIST_FILE = GameFrame/Info.plist;
+				INFOPLIST_FILE = UbercornFrame/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.andyqua.GameFrame;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andyqua.UbercornFrame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -460,7 +460,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A14B8CC121A35C3100EC0C4B /* Build configuration list for PBXProject "GameFrame" */ = {
+		A14B8CC121A35C3100EC0C4B /* Build configuration list for PBXProject "UbercornFrame" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A14B8CD621A35C3300EC0C4B /* Debug */,
@@ -469,7 +469,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A14B8CD821A35C3300EC0C4B /* Build configuration list for PBXNativeTarget "GameFrame" */ = {
+		A14B8CD821A35C3300EC0C4B /* Build configuration list for PBXNativeTarget "UbercornFrame" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A14B8CD921A35C3300EC0C4B /* Debug */,

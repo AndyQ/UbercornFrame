@@ -298,8 +298,7 @@ extension ViewController {
     }
 
     func duplicateFrame() {
-        let frame = animation.duplicateFrame()
-//        self.frameToView(self.currentFrame)
+        _ = animation.duplicateFrame()
     }
     
     func deleteFrame() {
