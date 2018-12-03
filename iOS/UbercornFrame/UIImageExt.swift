@@ -15,6 +15,8 @@ enum PixelFormat
     case argb
     case bgra
     case rgba
+    case bgr
+    case rgb
 }
 
 extension CGBitmapInfo
@@ -47,7 +49,13 @@ extension CGBitmapInfo
         // This is slippery… while byte order host returns little endian, default bytes are stored in big endian
         // format. Here we just assume if no byte order is given, then simple RGB is used, aka big endian, though…
         
-        if alphaFirst && endianLittle {
+        if alphaInfo! == .none {
+            if endianLittle {
+                return .bgr
+            } else {
+                return .rgb
+            }
+        } else if alphaFirst && endianLittle {
             return .bgra
         } else if alphaFirst {
             return .argb
@@ -65,8 +73,8 @@ extension CGBitmapInfo
 // Extension for Reading GIFs
 extension UIImage {
     
-    class func gifImage( withData data: NSData) -> [ImageFrame]? {
-        guard let source = CGImageSourceCreateWithData(data, nil) else {
+    class func gifImage( withData data: Data) -> [ImageFrame]? {
+        guard let source = CGImageSourceCreateWithData(data as NSData, nil) else {
             print("image doesn't exist")
             return nil
         }
@@ -75,8 +83,8 @@ extension UIImage {
     }
     
     class func gifImage( withURL url:URL) -> [ImageFrame]? {
-        guard let imageData = NSData(contentsOf: url) else {
-            print("image named \"\(url)\" into NSData")
+        guard let imageData = try? Data(contentsOf: url) else {
+            print("Unable to load image named \"\(url)\" into NSData")
             return nil
         }
         
@@ -90,8 +98,8 @@ extension UIImage {
                 return nil
         }
         
-        guard let imageData = NSData(contentsOf: bundleURL) else {
-            print("SwiftGif: Cannot turn image named \"\(name)\" into NSData")
+        guard let imageData = try? Data(contentsOf: bundleURL) else {
+            print("SwiftGif: Cannot turn image named \"\(name)\" into Data")
             return nil
         }
         
@@ -102,7 +110,11 @@ extension UIImage {
         var delay = 0.1
         
         let cfProperties = CGImageSourceCopyPropertiesAtIndex(source, index, nil)
-        let gifProperties: CFDictionary = unsafeBitCast(CFDictionaryGetValue(cfProperties, Unmanaged.passUnretained(kCGImagePropertyGIFDictionary).toOpaque()), to: CFDictionary.self)
+        let gifProperties: CFDictionary? = unsafeBitCast(CFDictionaryGetValue(cfProperties, Unmanaged.passUnretained(kCGImagePropertyGIFDictionary).toOpaque()), to: CFDictionary.self)
+        
+        if gifProperties == nil {
+            return delay
+        }
         
         var delayObject: AnyObject = unsafeBitCast(CFDictionaryGetValue(gifProperties, Unmanaged.passUnretained(kCGImagePropertyGIFUnclampedDelayTime).toOpaque()), to: AnyObject.self)
         
@@ -139,10 +151,9 @@ extension UIImage {
         let count = CGImageSourceGetCount(source)
         var images = [ImageFrame]()
         
-        
         for i in 0..<count {
             let image : CGImage?
-            if size.width != 16 {
+            if size.width != size.height || Int(size.width)%16 != 0 {
                 let options: [NSString: AnyObject] = [
                     kCGImageSourceThumbnailMaxPixelSize: NSNumber(integerLiteral:16),
                     kCGImageSourceCreateThumbnailFromImageAlways: NSNumber(booleanLiteral: true),
@@ -170,45 +181,66 @@ extension UIImage {
     class func getImageAsFrame( _ image: CGImage ) -> ImageFrame {
         let frame = ImageFrame()
         
+        let width = max(image.width, image.height)
+        let pixelStride = width / 16
+
         // get pixel data
-        if let rawData = image.dataProvider?.data,
-            let buf =  CFDataGetBytePtr(rawData) {
-            let length = CFDataGetLength(rawData)
-            
-            var p = 0
-            for i in stride(from:0, to:length, by:4) {
-                
-                let f1 : CGFloat = CGFloat(buf[i])/255
-                let f2 : CGFloat = CGFloat(buf[i+1])/255
-                let f3 : CGFloat = CGFloat(buf[i+2])/255
-                let f4 : CGFloat = CGFloat(buf[i+3])/255
-                
-                let c : UIColor
-                switch image.bitmapInfo.pixelFormat! {
-                case .abgr:
-                    c = UIColor(red: f4, green: f3, blue: f2, alpha: f1)
-                case .argb:
-                    c = UIColor(red: f2, green: f3, blue: f4, alpha: f1)
-                case .bgra:
-                    c = UIColor(red: f3, green: f2, blue: f1, alpha: f4)
-                case .rgba:
-                    c = UIColor(red: f1, green: f2, blue: f3, alpha: f4)
+        let pixelData = getPixelDataForImage(image)
+        
+        let pixelSize = 4
+
+        for y in 0 ..< 16 {
+            for x in 0 ..< 16 {
+                let i = (x*pixelStride*pixelSize) + (y*pixelStride*width*pixelSize)
+
+                var r :CGFloat = 0
+                var g :CGFloat = 0
+                var b :CGFloat = 0
+                if i < pixelData.count {
+                    //let a = CGFloat(pixelData[i])/255
+                    r = CGFloat(pixelData[i+1])/255
+                    g = CGFloat(pixelData[i+2])/255
+                    b = CGFloat(pixelData[i+3])/255
                 }
-                
-                let x = p % 16
-                let y = p / 16
-                
+                let c = UIColor(red: r, green: g, blue: b, alpha: 1.0)
                 frame.pixels[x][y] = c
-                
-                p += 1
-                if p == 256 {
-                    break
-                }
             }
         }
-        
+
         return frame
     }
+
     
-   
+    class func getPixelDataForImage( _ inImage : CGImage ) -> [UInt8] {
+        // Converts the passed in image into a ARGB image so we can be consistent
+        
+        // Get image width, height. We'll use the entire image.
+        let pixelsWide = inImage.width
+        let pixelsHigh = inImage.height
+        
+        
+        // Use the generic RGB color space.
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        
+        let maxSize = max(pixelsWide, pixelsHigh)
+        let dataSize = maxSize * maxSize * 4
+        var pixelData = [UInt8](repeating: 0, count: Int(dataSize))
+
+        // Declare the number of bytes per row. Each pixel in the bitmap in this
+        // example is represented by 4 bytes; 8 bits each of red, green, blue, and
+        // alpha.
+        let bitmapBytesPerRow = (maxSize * 4);
+
+        let context = CGContext(data: &pixelData, width: maxSize, height: maxSize, bitsPerComponent: 8, bytesPerRow: bitmapBytesPerRow, space: colorSpace, bitmapInfo:CGImageAlphaInfo.premultipliedFirst.rawValue)
+
+        let rect = CGRect(x: 0, y: 0, width: pixelsWide, height: pixelsHigh)
+        
+        context?.draw(inImage, in: rect)
+        
+        var image = context!.makeImage()!
+        let w = image.width
+        let h = image.height
+        return pixelData
+    }
+
 }

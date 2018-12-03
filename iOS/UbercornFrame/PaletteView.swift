@@ -50,7 +50,7 @@ class PaletteView: UIView {
         self.addSubview(verticalStackView)
         
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[sv]|", options: [], metrics: [:], views: ["sv":verticalStackView]))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[sv(90)]", options: [], metrics: [:], views: ["sv":verticalStackView]))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-5-[sv(90)]", options: [], metrics: [:], views: ["sv":verticalStackView]))
         
         
         

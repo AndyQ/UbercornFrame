@@ -58,7 +58,8 @@ class Animation {
         }
         frameIndex = 0
 
-        return self.frames[frameIndex]
+        let newFrame = self.frames[frameIndex]
+        return newFrame
     }
     
     func nextFrame() -> ImageFrame {
@@ -73,6 +74,7 @@ class Animation {
     
     func addNewFrameAfterCurrentPosition( ) -> ImageFrame {
         let frame = ImageFrame()
+        frame.delay = self.frames[frameIndex].delay
         self.frames.insert(frame, at:self.frameIndex+1)
         self.frameIndex += 1
         return self.frames[frameIndex]
@@ -80,7 +82,8 @@ class Animation {
     
     func duplicateFrame() -> ImageFrame {
         let frame = ImageFrame(frame:self.frames[frameIndex])
-        
+        frame.delay = self.frames[frameIndex].delay
+
         self.frames.insert(frame, at:self.frameIndex+1)
         self.frameIndex += 1
         return self.frames[frameIndex]

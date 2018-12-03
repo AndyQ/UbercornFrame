@@ -37,12 +37,12 @@ class ArrayChoiceTableViewController : UITableViewController {
     private let values : [String]
     private let onSelect : SelectionHandler?
     
-    init(_ values : [String], onSelect : SelectionHandler? = nil) {
+    init(_ values : [String], scroll: Bool = false, onSelect : SelectionHandler? = nil) {
         self.values = values
         self.onSelect = onSelect
         
         super.init(style: .plain)
-        self.tableView.isScrollEnabled = false
+        self.tableView.isScrollEnabled = scroll
         
         // Calc preferred size
         let h : CGFloat = CGFloat(min( self.values.count * 44, 500 ))

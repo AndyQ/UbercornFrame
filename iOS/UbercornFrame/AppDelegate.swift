@@ -12,7 +12,24 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        
+        print( url )
+        do {
+            let newURL = getDocsFolderURL().appendingPathComponent(url.lastPathComponent)
+            try FileManager.default.copyItem(at: url, to: newURL)
+            
+            if let vc = (window?.rootViewController as? UINavigationController)?.topViewController as? ViewController {
+                vc.loadFile(fromURL: newURL)
+            }
+            
+        } catch {
+                print( "Failed to copy file!" )
+        }
+        return false
+    }
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         

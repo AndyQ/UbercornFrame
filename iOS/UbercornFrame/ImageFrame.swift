@@ -20,11 +20,11 @@ class ImageFrame {
     var delay : Int = 100
     
     init() {
-        pixels = Array(repeating: Array(repeating: UIColor.white, count: 16), count: 16)
+        pixels = Array(repeating: Array(repeating: UIColor.black, count: 16), count: 16)
     }
 
     init( frame: ImageFrame ) {
-        pixels = Array(repeating: Array(repeating: UIColor.white, count: 16), count: 16)
+        pixels = Array(repeating: Array(repeating: UIColor.black, count: 16), count: 16)
         for y in 0 ..< 16 {
             for x in 0 ..< 16 {
                 self.pixels[x][y] = frame.pixels[x][y] //UIColor(cgColor:frame.pixels[x][y].cgColor)
