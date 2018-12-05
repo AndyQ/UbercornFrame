@@ -10,7 +10,6 @@ import Starscream
 
 class RemoteServer {
 
-
     var socket : WebSocket?
     var didConnectCallback : ((Bool)->())?
     
@@ -54,7 +53,6 @@ extension RemoteServer : WebSocketDelegate {
         print("websocket is connected")
         sendCommand( "CONNECT" )
         didConnectCallback?(true)
-//        didConnectCallback = nil
     }
     
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
