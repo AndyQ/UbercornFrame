@@ -3,8 +3,10 @@ import argparse
 import colorsys
 import math
 import time
+from queue import Queue
 
 import comms
+import webserver
 from theme import Theme
 
 try:
@@ -16,18 +18,20 @@ except ImportError:
 animating = True
 isConnected = False
 theme = None
+queue = None
 
 def handleQueue():
-    global theme
-    while not comms.q.empty():
-        item = comms.q.get()
-        #print( item )
+    global theme, queue
+    while not queue.empty():
+        item = queue.get()
+        print( item )
 
         tokens = item.split(" ")
-        if tokens[0] == "CONNECT":
+        cmd = tokens[0]
+        if cmd == "CONNECT":
             theme = Theme()
             isConnected = True
-        elif tokens[0].startswith("SET") and len(tokens) == 6:
+        elif cmd.startswith("SET") and len(tokens) == 6:
             x = int(tokens[1])
             y = int(tokens[2])
             r = int(tokens[3])
@@ -35,9 +39,9 @@ def handleQueue():
             b = int(tokens[5])
 
             theme.setFramePixel( x, y, r, g, b)
-        elif tokens[0] == "FRAME":
+        elif cmd == "FRAME":
             # Two items here - cmd and data
-            data = comms.q.get()
+            data = queue.get()
             pos = 0
             for x in range(0, 16):
                 for y in range(0, 16):
@@ -47,6 +51,26 @@ def handleQueue():
                     theme.setFramePixel( x, y, r, g, b)
 
                     pos += 3
+        elif cmd.startswith( "STOP" ):
+            theme = Theme( None )
+
+        elif cmd.startswith( "PLAY" ):
+            # cmd consists of PLAY:filename
+            filename = cmd.split(":")[1]
+            path = "./images/{}".format(filename)
+            theme = Theme( path )
+
+        elif cmd.startswith( "SAVE" ):
+            # Two items here - cmd and data
+            # cmd consists of SAVE:filename
+            data = queue.get()
+
+            filename = cmd.split(":")[1]
+            path = "./images/{}".format(filename)
+
+            # Write to file
+            with open( path, "wb" ) as outf:
+                outf.write(data)
 
 
 def setPixel( x, y, r, g, b ):
@@ -74,9 +98,12 @@ def updateThemeFrame():
     time.sleep(delayTime/1000.0)
 
 def main( filename ):
-    global theme
-    comms.startWebSocket()
-    comms.startWebServer()
+    global theme, queue
+
+    queue = Queue()
+
+    comms.startWebSocket(queue)
+    webserver.startWebServer(queue)
 
     theme = Theme( filename )
     if not theme.isValid:

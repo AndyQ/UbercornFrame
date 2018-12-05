@@ -1,0 +1,70 @@
+$def with (files)
+
+$def startRow():
+    <div class="row">
+        <div class="card-deck mb-3 text-center">
+
+$def endRow():
+    </div>
+    </div>
+
+$def addBlock( index, file ):
+    $ name = file.replace(".gif","")
+
+    <div class="card mb-3 shadow-sm" style="width: 18rem;">
+        <div class="card-header">
+        <h4 class="my-0 font-weight-normal" width=100px>$name</h4>
+        </div>
+        <div class="card-body">
+            <img src="/images/$file" width=100px height=100px>
+            </p>
+            <button type="button" class="btn btn-lg btn-block btn-outline-primary" onclick="play('$file')">Play</button>
+        </div>
+    </div>
+
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    </head>
+    <body>
+        <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+            <h1 class="display-4">Ubercorn</h1>
+            <button type="button" class="display-1 btn btn-lg btn-outline-primary" onclick="stop()">Stop playing</button>
+        </div>
+              
+        <div class="container" style="max-width: 960px">
+
+            $for index,file in enumerate(files):
+                $if index % 3 == 0:
+                    $if index > 0:
+                        $:endRow()
+                    $:startRow()    
+                $:addBlock( index, file )
+            </div>
+        </div>        
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script>
+function play( file ) {
+    $$.get("/play/"+file, function(data, status){
+        //alert("Status: " + status);
+    });
+}
+
+function stop( ) {
+    $$.get("/stop", function(data, status){
+        //alert("Status: " + status);
+    });
+}
+
+        </script>
+    </body>
+</html>

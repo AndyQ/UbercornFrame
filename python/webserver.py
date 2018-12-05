@@ -1,15 +1,54 @@
+import glob
+from time import sleep
+import threading
+from queue import Queue
 import web
 from web.httpserver import StaticMiddleware
+
+render = web.template.render('templates/')
+dataQueue = None
+
+def startWebServer( queue ):
+    global dataQueue
+    dataQueue = queue
+    wst = threading.Thread(target=initWebServer)
+    wst.daemon = True
+    wst.start()
 
 
 def initWebServer():
     urls = (
-    '/', 'index'
+    '/', 'index',
+    '/play/(.*)', 'Play',
+    '/stop', 'Stop'
+
     )
 
     app = web.application(urls, globals())
-    web.httpserver.runsimple(app.wsgifunc(lambda app: StaticMiddleware(app, '/static/')), ("0.0.0.0", 8080))
+    web.httpserver.runsimple(app.wsgifunc(lambda app: StaticMiddleware(app, '/images/')), ("0.0.0.0", 8080))
 
 class index:
     def GET(self):
-        return "Hello, world!"
+        # Get list of gif files in images folder
+        files = glob.glob('./images/*.gif')
+        files = [ file[9:] for file in files ]
+        return render.index(files)
+
+class Play:
+    def GET(self, file):
+        global dataQueue
+        dataQueue.put( "PLAY:{}".format(file) )
+        return "OK"
+
+class Stop:
+    def GET(self):
+        global dataQueue
+        dataQueue.put( "STOP" )
+        return "OK"
+
+if __name__ == '__main__':
+    q = Queue()
+    startWebServer(q)
+
+    while True:
+        sleep(100)

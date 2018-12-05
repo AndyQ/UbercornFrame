@@ -5,13 +5,17 @@ from time import sleep
 from queue import Queue
 from webserver import initWebServer
 
-q = Queue()
+dataQueue = None
 
 async def handler(websocket, path):
-    while True:
-        message = await websocket.recv()
-        q.put( message )
-        await websocket.send("OK")
+    global dataQueue
+    try:
+        while True:
+            message = await websocket.recv()
+            dataQueue.put( message )
+            await websocket.send("OK")
+    except:
+        print( "Socket closed!" )
 
 def initSocket():
     asyncio.set_event_loop(asyncio.new_event_loop())
@@ -23,14 +27,9 @@ def initSocket():
     asyncio.get_event_loop().run_forever()
 
 
-def startWebSocket():
+def startWebSocket(queue):
+    global dataQueue
+    dataQueue = queue
     wst = threading.Thread(target=initSocket)
     wst.daemon = True
     wst.start()
-
-
-def startWebServer():
-    wst = threading.Thread(target=initWebServer)
-    wst.daemon = True
-    wst.start()
-

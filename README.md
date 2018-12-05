@@ -17,3 +17,9 @@ Also now exposes two servers:
 
 A companion app to the Ubercorn player.  Can load and edit animated gifs (large ones are downsampled to 16x16).
 Also, connects and communicates with Python app over websockets 
+
+Can import images via Copy/Paste.  If a pasted image is a square and the sides are exactly divisible by 16, it assumes that its a large pixel image and rather than downsampling, takes the image colors at a stride that matches the image width / 16. 
+
+The ColorPickerViewController is a modified version of Christian Zimmermann's iOS_Swift_ColorPicker (https://github.com/Christian1313/iOS_Swift_ColorPicker)
+
+Connects to the Ubercorn (running the above Python app) over Websockets - powered by the Starscream sockets library (https://github.com/daltoniam/Starscream)
