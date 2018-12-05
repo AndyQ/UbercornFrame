@@ -34,7 +34,7 @@ struct Palette {
         
         return palettes
     }
-    
+        
     init( name: String, colors: [String] ) {
         self.paletteName = name
         

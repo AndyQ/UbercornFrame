@@ -10,7 +10,7 @@ import UIKit
 import MobileCoreServices
 
 class Animation {
-    private var frames : [ImageFrame]
+    public private (set) var frames : [ImageFrame]
     public private (set) var frameIndex = 0 {
         didSet { frameChanged?(frameIndex) }
     }

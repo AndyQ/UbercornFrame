@@ -8,6 +8,7 @@
 
 import UIKit
 
+/*
 func dataAsString( _ val: Any ) -> String? {
     let d = val as! Data
     return String( data:d, encoding:.utf8 )
@@ -114,3 +115,4 @@ func iterateEnum<T: Hashable>(_: T.Type) -> AnyIterator<T> {
         return next
     }
 }
+*/

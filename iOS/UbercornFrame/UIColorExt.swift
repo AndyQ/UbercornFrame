@@ -58,4 +58,25 @@ extension UIColor {
             return nil
         }
     }
+    
+    var hue: CGFloat
+    {
+        var hue: CGFloat = 0
+        var saturation: CGFloat = 0
+        var brightness: CGFloat = 0
+        var alpha: CGFloat = 0
+        
+        self.getHue(&hue,
+                    saturation: &saturation,
+                    brightness: &brightness,
+                    alpha: &alpha)
+        
+        return hue
+    }
+
+    var isLight: Bool {
+        var white: CGFloat = 0
+        getWhite(&white, alpha: nil)
+        return white > 0.4
+    }
 }

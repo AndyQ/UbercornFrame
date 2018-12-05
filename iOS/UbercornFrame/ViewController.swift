@@ -16,10 +16,12 @@ extension CGFloat {
 }
 
 class ViewController: UIViewController {
-    static let menuItems = ["New file", "Load file", "Save file", "Debug pasteboard", "Paste image", "Disconnect from Ubercorn Frame", "Connect to Ubercorn Frame", "Settings"]
+    static let menuItems = ["New file", "Load file", "Save file", "Paste image", "Create palette from image", "Disconnect from Ubercorn Frame", "Connect to Ubercorn Frame", "Settings"]
 
     @IBOutlet weak var verticalStackView: UIStackView!
+    @IBOutlet weak var paletteScrollView: UIScrollView!
     @IBOutlet weak var paletteView: PaletteView!
+    @IBOutlet weak var sendToUbercornButton: UIButton!
 
     @IBOutlet weak var frameLabel: UILabel!
     @IBOutlet weak var frameDelayLabel: UILabel!
@@ -30,16 +32,13 @@ class ViewController: UIViewController {
     var lastTouchedY : Int = -1
 
     var currentColor : UIColor!
+    var pickingColor : Bool = false
     
     var remoteServer : RemoteServer = RemoteServer()
     
     let animation = Animation()
     
     var animating = false
-    var frameIndex : Int = -1 {
-        didSet {
-        }
-    }
     
     var currentFrame : ImageFrame {
         return animation.currentFrame
@@ -48,31 +47,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let image = UIImage(named:"image.png")!
-        let cgImage = image.cgImage!
-        if let rawData = image.cgImage!.dataProvider?.data,
-            let buf =  CFDataGetBytePtr(rawData) {
-            let length = CFDataGetLength(rawData)
-
-            var l = 0
-            for y in 0 ..< 160 {
-                for x in 0 ..< 160 {
-                    if buf[l] != 0 {
-                        print( "\(x/10),\(y/10) - \(buf[l])" )
-                    }
-                    l += 1
-                }
-            }
-            print( "len - \(length)" )
-            
-        }
-        
         buildFrame()
         
         animation.frameChanged = { [unowned self] (frameNr) in
-            self.frameLabel.text = "\(self.animation.frameIndex+1) / \(self.animation.numberOfFrames)"
+            self.frameLabel.text = "\(frameNr+1) / \(self.animation.numberOfFrames)"
             self.frameDelayLabel.text = "\(self.currentFrame.delay)ms"
-
         }
         
         
@@ -80,18 +59,40 @@ class ViewController: UIViewController {
             self.currentColor = color
         }
 
-        paletteView.changePalettePressed = { [unowned self] in
+        paletteView.changePalette = { [unowned self] in
             let items = PaletteManager.instance.getAllPaletteNames()
             let controller = ArrayChoiceTableViewController(items, scroll:true) { [unowned self] (name) in
-                self.paletteView.setPalette(name: name)
+                if let p = PaletteManager.instance.getPalette(name) {
+                    self.paletteView.setPalette(palette: p)
+                }
             }
-            self.showPopup(controller, sourceView: self.paletteView )
+            self.showPopup(controller, sourceView: self.paletteView, rect:self.paletteView.bounds )
         }
-        paletteView.setPalette(name: PaletteManager.instance.initialPalette )
+
+        paletteView.showPage = { [unowned self] (page) in
+            // Force scrollview to show button if necessary
+            var rect = self.paletteScrollView.bounds
+            rect.origin.x = rect.size.width * CGFloat(page)
+            rect.origin.y = 0
+            self.paletteScrollView.scrollRectToVisible(rect, animated: true)
+        }
+        
+        paletteView.chooseColor = { [unowned self] (source, rect) in
+            let colorPickerVC = ColorPickerViewController()
+            colorPickerVC.delegate = self.paletteView
+            colorPickerVC.modalPresentationStyle = .popover
+            self.showPopup(colorPickerVC, sourceView: source, rect:rect )
+        }
+        
+        paletteView.pickColor = { [unowned self] () in
+            self.pickingColor = true
+        }
+
+        paletteView.setPalette(palette: PaletteManager.instance.initialPalette )
         
         self.frameDelayLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ViewController.changeFrameDelayPressed(_:))))
         
-        frameIndex = 0
+        self.animation.frameChanged?(self.animation.frameIndex)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -127,7 +128,14 @@ extension ViewController {
         guard let (x,y) = cells.indices(of: v) else { return }
         
         if x != lastTouchedX || y != lastTouchedY {
-            setPixel( x:x, y:y, c:currentColor)
+            if pickingColor {
+                pickingColor = false
+                let color = getPixelColor( x:x, y:y )
+                paletteView.colorSelectionChanged( selectedColor:color )
+                
+            }else {
+                setPixel( x:x, y:y, c:currentColor)
+            }
         }
         lastTouchedX = x
         lastTouchedY = y
@@ -144,6 +152,12 @@ extension ViewController {
         }
         lastTouchedX = x
         lastTouchedY = y
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        lastTouchedX = -1
+        lastTouchedY = -1
+
     }
     
     @IBAction func playPausePressed( _ sender: Any ) {
@@ -172,7 +186,7 @@ extension ViewController {
             self.frameDelayLabel.text = "\(self.currentFrame.delay)ms"
         }
         
-        self.showPopup(controller, sourceView: gr.view! )
+        self.showPopup(controller, sourceView: gr.view!, rect:gr.view!.bounds )
     }
 
     @IBAction func clearPressed( _ sender: Any ) {
@@ -215,6 +229,10 @@ extension ViewController {
         moveRight()
     }
     
+    @IBAction func saveToUbercornPressed( _ sender: Any ) {
+        saveFile(saveLocally: false)
+    }
+    
 
     @IBAction func didSelectMenu( _ sender: Any ) {
         var items = ViewController.menuItems
@@ -231,7 +249,7 @@ extension ViewController {
             } else if name == "Load file" {
                 self.loadFile()
             } else if name == "Save file" {
-                self.saveFile("image.gif")
+                self.saveFile()
             } else if name == "Connect to Ubercorn Frame" {
                 self.connectToUbercornFrame()
             } else if name == "Disconnect from Ubercorn Frame" {
@@ -240,12 +258,18 @@ extension ViewController {
                 self.performSegue(withIdentifier: "showSettings", sender: self)
             } else if name == "Paste image" {
                 self.handlePasteImage()
-            } else if name == "Debug pasteboard" {
-                UIPasteboard.general.debug()
+            } else if name == "Create palette from image" {
+                self.createPaletteFromImage()
             }
         }
         
         self.showPopup(controller, sourceView: sender as! UIBarButtonItem )
+    }
+    
+    func createPaletteFromImage() {
+        if let p = PaletteManager.instance.createPalette(fromImageFrames: self.animation.frames) {
+            self.paletteView.setPalette(palette: p)
+        }
     }
 }
 
@@ -262,9 +286,11 @@ extension ViewController {
             remoteServer.connect(hostName: hostName, port:port, didConnect:{ [unowned self] (connected) in
                 if connected {
                     self.connectedLabel.isHidden = false
+                    self.sendToUbercornButton.isHidden = false
                     self.sendFrameChange(frame:self.currentFrame)
                 } else {
                     self.connectedLabel.isHidden = true
+                    self.sendToUbercornButton.isHidden = true
                     self.alert( "Unable to connect to Ubercorn Frame.  Is the player app running?" )
                 }
             })
@@ -274,6 +300,7 @@ extension ViewController {
     func disconnectFromUbercornFrame() {
         remoteServer.disconnect()
         self.connectedLabel.isHidden = true
+        self.sendToUbercornButton.isHidden = true
     }
     
     func sendPixelChange( x: Int, y: Int, color : UIColor ) {
@@ -301,10 +328,10 @@ extension ViewController : UIPopoverPresentationControllerDelegate{
 }
 
 extension ViewController {
-    private func showPopup(_ controller: UIViewController, sourceView: UIView) {
+    private func showPopup(_ controller: UIViewController, sourceView: UIView, rect: CGRect) {
         let presentationController = AlwaysPresentAsPopover.configurePresentation(forController: controller)
         presentationController.sourceView = sourceView
-        presentationController.sourceRect = sourceView.bounds
+        presentationController.sourceRect = rect
         presentationController.permittedArrowDirections = [.down, .up]
         self.present(controller, animated: true)
     }
@@ -433,6 +460,11 @@ extension ViewController {
         sendFrameChange(frame:currentFrame)
     }
     
+    func getPixelColor( x : Int, y : Int ) -> UIColor {
+        let c = currentFrame.pixels[x][y]
+        return c
+    }
+    
     func setPixel( x : Int, y : Int, c : UIColor ) {
         cells[x][y].backgroundColor = c
         currentFrame.pixels[x][y] = c
@@ -519,7 +551,7 @@ extension ViewController {
 // MARK: File handling
 extension ViewController : UIDocumentPickerDelegate {
     
-    func saveFile( _ fileName : String ) {
+    func saveFile( saveLocally: Bool = true ) {
         
         showSubmitTextFieldAlert(title: "Save file", message: "Enter filename", placeholder: "filename") { [unowned self] (name) in
             guard var name = name else { return }
@@ -529,15 +561,25 @@ extension ViewController : UIDocumentPickerDelegate {
             }
             
             let imageData = self.animation.generateGif()
-            let url = getDocsFolderURL().appendingPathComponent(name)
-            do {
-                // write data
-                try imageData.write(to: url)
-            } catch {
-                print( "Error - \(error)" )
+            
+            if saveLocally {
+                let url = getDocsFolderURL().appendingPathComponent(name)
+                do {
+                    // write data
+                    try imageData.write(to: url)
+                } catch {
+                    print( "Error - \(error)" )
+                }
+            } else {
+                if self.remoteServer.isConnected {
+                    self.remoteServer.sendDataCommand(cmd:"SAVE:\(name)", data:imageData)
+                }
+
             }
         }
     }
+    
+    
     func shareFile() {
         
         let imageData = animation.generateGif()
@@ -566,13 +608,6 @@ extension ViewController : UIDocumentPickerDelegate {
     func loadFile() {
   
         self.performSegue(withIdentifier: "loadFile", sender: self)
-
-/*
-        let documentPicker = UIDocumentPickerViewController(documentTypes: [String(kUTTypeImage)], in: .import)
-        //Call Delegate
-        documentPicker.delegate = self
-        self.present(documentPicker, animated: true)
-*/
     }
     
     public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
@@ -584,9 +619,7 @@ extension ViewController : UIDocumentPickerDelegate {
         if let frames = UIImage.gifImage(withURL:url) {
             setFrames( frames: frames)
         }
-
     }
-    
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         print("view was cancelled")
@@ -596,13 +629,7 @@ extension ViewController : UIDocumentPickerDelegate {
     func handlePasteImage() {
         let pb = UIPasteboard.general
         var url : URL?
-        var imageData : Data?
-        var type : String?
         
-        // see if we have a type of file
-        if let value = pb.value(forPasteboardType: "com.apple.pasteboard.promised-file-content-type" ) {
-            type = String(data:value as! Data, encoding:.utf8)!
-        }
         if let value = pb.value(forPasteboardType: "public.url" ) as? String,
             let fileURL = URL(string:value) {
             url = fileURL
@@ -612,37 +639,14 @@ extension ViewController : UIDocumentPickerDelegate {
         } else if let value = pb.value(forPasteboardType: "public.text" ) as? String,
             let fileURL = URL(string:value) {
             url = fileURL
-        } else if let value = pb.data(forPasteboardType: "com.apple.icns" ) {
-            imageData = value
-        } else if let data = pb.data(forPasteboardType: "public.image") {
-            imageData = data
         }
 
-/*
-        for item in pb.items {
-            for (key,value) in item {
-                print( "Item name - \(key)")
-                if key == "public.url" {
-                    url = URL(string:value as! String)
-                } else if key == "public.file-url" {
-                    url = URL(string:value as! String)
-                } else if key == "com.apple.pasteboard.promised-file-content-type" {
-                    type = String(data:value as! Data, encoding:.utf8)!
-                } else if let image = pb.image {
-                    imageData = image
-                }
-//                print( "Item value - \(value)")
-            }
-        }
-*/
-        
         if let url = url {
             if let frames = UIImage.gifImage(withURL:url) {
                 self.setFrames( frames: frames)
             }
             
         } else if let imageData = pb.data(forPasteboardType: "public.image") {
-            let image = pb.image
             if let frames = UIImage.gifImage(withData:imageData) {
                 self.setFrames( frames: frames)
             }

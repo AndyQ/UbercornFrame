@@ -237,9 +237,6 @@ extension UIImage {
         
         context?.draw(inImage, in: rect)
         
-        var image = context!.makeImage()!
-        let w = image.width
-        let h = image.height
         return pixelData
     }
 

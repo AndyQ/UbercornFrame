@@ -8,22 +8,23 @@
 
 import UIKit
 
-class PaletteView: UIView {
+class PaletteView_old: UIView {
     @IBOutlet weak var paletteName : UILabel!
     @IBOutlet weak var viewWidth : NSLayoutConstraint!
-
+    
     var currentPalette : Palette!
     
-    var selectedIndex = 0
-
+    var colourButtons = [UIButton]()
+    weak var selectedButton : UIButton?
+    
     var colorChanged : ((UIColor)->())?
     var changePalette : (()->())?
     var showPage : ((Int)->())?
-    var chooseColor : ((UIView, CGRect)->())?
+    var chooseColor : ((UIView)->())?
     var pickColor : (()->())?
     let buttonWidth : CGFloat = 35
     let buttonHeight : CGFloat = 35
-
+    
     var normalViewWidth : CGFloat = 0
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,78 +40,21 @@ class PaletteView: UIView {
         if gr.state == .began {
             let p = gr.location(in: self)
             
-            if checkColorTouched( p ) {
-                chooseColor?(self, self.bounds)
+            if let v = hitTest(p, with: nil) as? UIButton {
+                selectColor( v )
+                
+                chooseColor?(v)
             } else {
                 changePalette?()
             }
         }
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let t = touches.first else { return }
-        let p = t.location(in: self)
-        _ = checkColorTouched(p)
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let t = touches.first else { return }
-        let p = t.location(in: self)
-        _ = checkColorTouched(p)
-    }
-    
-    func checkColorTouched( _ p : CGPoint ) -> Bool {
-        let x = Int(p.x) / 40
-        let y = Int(p.y) / 40
-        
-        guard x < 8 && y < 3 else { return false}
-        let index = x + (y*8)
-        
-        if index != selectedIndex && currentPalette.colors.count > index {
-            selectedIndex = index
-            colorChanged?( currentPalette.colors[index] )
-
-            self.setNeedsDisplay()
-        }
-        
-        return true
-    }
-    
-    override func draw(_ rect: CGRect) {
-        guard let ctx = UIGraphicsGetCurrentContext() else { return }
-        guard let currentPalette = currentPalette else { return }
-
-        for (index, element) in currentPalette.colors.enumerated() {
-            let buttonPage = index / 24
-            let buttonIndex = (index - (24*buttonPage))
-            let buttonX = buttonIndex % 8
-            let buttonY = buttonIndex / 8
-            
-            var x :CGFloat = 5 + CGFloat(40 * buttonX) + CGFloat(buttonPage) * normalViewWidth
-            var y :CGFloat = [5,45,85][buttonY]//buttonY == 0 ? 5 : 80
-            var w = buttonWidth
-            var h = buttonHeight
-            
-            if index == selectedIndex {
-                x -= 3
-                y -= 3
-                w += 6
-                h += 6
-            }
-
-            ctx.setFillColor(element.cgColor)
-            ctx.addRect(CGRect(x:x, y:y, width:w, height:h))
-            ctx.drawPath(using: .fillStroke)
-
-        }
-        
-    }
-
     func createAddButton() {
         // create Add new color button
         
-        let x :CGFloat = self.viewWidth.constant - 40
-        var y :CGFloat = 5//self.bounds.height/2 - buttonWidth/2
+        var x :CGFloat = self.viewWidth.constant - 40
+        let y :CGFloat = self.bounds.height/2 - buttonWidth/2
         
         let addColorButton = createButton(x:x, y:y, backgroundColor:.white)
         addColorButton.setImage(UIImage(named:"plus"), for: .normal)
@@ -118,8 +62,8 @@ class PaletteView: UIView {
         self.addSubview(addColorButton)
         
         // Create pick button
-        y += 40
-
+        x -= 45
+        
         let pickColorButton = createButton(x:x, y:y, backgroundColor:.white)
         pickColorButton.setImage(UIImage(named:"dropper"), for: .normal)
         pickColorButton.addTarget(self, action: #selector(PaletteView.pickColorPressed(_:)), for: .touchUpInside)
@@ -128,84 +72,107 @@ class PaletteView: UIView {
     
     func createButton(x: CGFloat, y: CGFloat, backgroundColor:UIColor ) -> UIButton {
         let b = UIButton(type: .custom)
-
+        
         b.frame = CGRect(x: x, y: y, width: buttonWidth, height: buttonHeight)
         
         b.layer.cornerRadius = 0.5 * buttonWidth;
         b.layer.borderWidth = 1
         b.layer.borderColor = UIColor.black.cgColor
         b.backgroundColor = backgroundColor
-
+        
         b.layer.shadowColor = UIColor.white.cgColor
         b.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
         b.layer.masksToBounds = false
         b.layer.shadowRadius = 5.0
         b.layer.shadowOpacity = 1
-
+        
         return b
     }
     
     @objc func createNewColorPressed( _ sender : Any ) {
         addColor( .white )
-        self.setNeedsDisplay()
-        selectedIndex = currentPalette.colors.count-1
         DispatchQueue.main.asyncAfter(deadline: .now()+0.1, execute: {
-            self.showPage?( self.currentPalette.colors.count / 24 )
+            self.showPage?( self.colourButtons.count / 16 )
             
             var delay = 0.0
-            if self.currentPalette.colors.count % 24 == 1 {
+            if self.colourButtons.count % 16 == 1 {
                 delay = 0.4
             }
             DispatchQueue.main.asyncAfter(deadline: .now()+delay, execute: {
-                self.chooseColor?(self, self.bounds)
+                self.selectColor( self.colourButtons.last! )
+                
+                self.chooseColor?(self.selectedButton!)
             })
         })
     }
-
+    
     @objc func pickColorPressed( _ sender : Any ) {
+        print( "picking color" )
         pickColor?()
     }
-
+    
     func addColor( _ color : UIColor ) {
-        currentPalette.colors.append(color)
-        let shouldStartNewPage = currentPalette.colors.count > 1 && currentPalette.colors.count % 24 == 1
-
+        
+        // Work out current x and y
+        let buttonPage = colourButtons.count / 16
+        let buttonIndex = (colourButtons.count - (16*buttonPage))
+        let buttonX = buttonIndex % 8
+        let buttonY = buttonIndex / 8
+        
+        let x :CGFloat = 5 + CGFloat(45 * buttonX) + CGFloat(buttonPage) * normalViewWidth
+        let y :CGFloat = buttonY == 0 ? 5 : 80
+        
+        let b = createButton(x:x, y:y, backgroundColor:color)
+        
+        b.addTarget(self, action: #selector(PaletteView.selectColor(_:)), for: .touchUpInside)
+        
+        colourButtons.append(b)
+        self.addSubview(b)
+        
         // see if we need to create a new page
-        if shouldStartNewPage {
-            self.viewWidth.constant += normalViewWidth
+        if (buttonPage+1) * Int(normalViewWidth) > Int(self.viewWidth.constant) {
+            self.viewWidth.constant = CGFloat(buttonPage+1) * normalViewWidth
             self.layoutIfNeeded()
             createAddButton()
         }
-
-        return
     }
-
+    
+    @objc func selectColor( _ button : UIButton ) {
+        if let b = selectedButton {
+            b.layer.shadowColor = UIColor.white.cgColor
+        }
+        
+        let newColor = button.backgroundColor!
+        button.layer.shadowColor = UIColor.black.cgColor
+        selectedButton = button
+        
+        colorChanged?( newColor )
+    }
     
     func setPalette( palette: Palette ) {
-        self.currentPalette = palette
-
         if normalViewWidth == 0 {
             normalViewWidth = self.viewWidth.constant
         }
-
+        
         self.viewWidth.constant = normalViewWidth
+        self.colourButtons.removeAll()
         self.subviews.forEach { $0.removeFromSuperview() }
         
         createAddButton()
+        for i in 0 ..< palette.colors.count {
+            addColor(palette.colors[i])
+        }
         
-        selectedIndex = 0
-        colorChanged?( currentPalette.colors[0] )
-
-        self.setNeedsDisplay()
+        selectColor(colourButtons[0])
     }
+    
+    
 }
 
 
-extension PaletteView : ColorPickerDelegate {
+extension PaletteView_old : ColorPickerDelegate {
     func colorSelectionChanged(selectedColor color: UIColor) {
-        currentPalette.colors[selectedIndex] = color
+        selectedButton?.backgroundColor = color
         colorChanged?( color )
-        
-        self.setNeedsDisplay()
     }
 }
