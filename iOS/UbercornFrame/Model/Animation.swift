@@ -29,6 +29,10 @@ class Animation {
         frames = [ImageFrame()]
     }
     
+    init(frames:[ImageFrame] ) {
+        self.frames = frames
+    }
+    
     func generateGif() -> Data {
         
         let fileProperties = [kCGImagePropertyGIFDictionary as String: [kCGImagePropertyGIFLoopCount as String: 0]]

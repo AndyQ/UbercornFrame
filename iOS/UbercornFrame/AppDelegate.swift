@@ -35,8 +35,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let d = UserDefaults.standard
         d.register(defaults: ["hostName" : "", "port" : -1, "palette":"MSPaint"])
-
+        
         return true
+    }
+    
+    func testZipFileExtract() {
+        if let url = Bundle.main.url(forResource: "invaders", withExtension: "zip" ) {
+            print( "Extracting \(url)" )
+            let zf = GameFrameArchiveHandler(zipFileURL: url)
+            print( "Done" )
+        }
+
     }
 }
 

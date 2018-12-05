@@ -616,8 +616,12 @@ extension ViewController : UIDocumentPickerDelegate {
     }
     
     public func loadFile( fromURL url:URL ) {
-        if let frames = UIImage.gifImage(withURL:url) {
-            setFrames( frames: frames)
+        if url.pathExtension == "zip" {
+            handleZipURL( url )
+        } else {
+            if let frames = UIImage.gifImage(withURL:url) {
+                setFrames( frames: frames)
+            }
         }
     }
     
@@ -642,16 +646,58 @@ extension ViewController : UIDocumentPickerDelegate {
         }
 
         if let url = url {
-            if let frames = UIImage.gifImage(withURL:url) {
+            if url.pathExtension == "zip" {
+                handleZipURL( url )
+            }
+            else if let frames = UIImage.gifImage(withURL:url) {
                 self.setFrames( frames: frames)
             }
-            
         } else if let imageData = pb.data(forPasteboardType: "public.image") {
             if let frames = UIImage.gifImage(withData:imageData) {
                 self.setFrames( frames: frames)
             }
         }
+    }
+    
+    func handleZipURL( _ url: URL ) {
+        print( "Extracting \(url)" )
+        let zf = GameFrameArchiveHandler(zipFileURL: url)
+        
+        if zf.foundImages.count == 1, let key = zf.foundImages.keys.first, let frames = zf.foundImages.values.first {
+            setFrames( frames:frames)
 
+            let animation = Animation(frames:frames)
+            let imageData = animation.generateGif()
+            let url = getDocsFolderURL().appendingPathComponent(key).appendingPathExtension("gif")
+            do {
+                try imageData.write(to: url)
+            } catch {
+            }
+
+        } else {
+            // Save all images
+            var message = "Following images found have been saved to documents:"
+            var failed = ""
+            for (key, frames) in zf.foundImages {
+                let animation = Animation(frames:frames)
+                let imageData = animation.generateGif()
+                
+                let url = getDocsFolderURL().appendingPathComponent(key).appendingPathExtension("gif")
+                do {
+                    try imageData.write(to: url)
+                    
+                    message += "\n   \(key)"
+                } catch {
+                    failed += "\n   \(key)"
+                }
+            }
+            
+            if failed != "" {
+                message += "\n\nThe following files couldn't be saved:" + failed
+            }
+            
+            alert( message, title:"Saved files" )
+        }
     }
 }
 
