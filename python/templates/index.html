@@ -36,6 +36,7 @@ $def addBlock( index, file ):
         <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
             <h1 class="display-4">Ubercorn</h1>
             <button type="button" class="display-1 btn btn-lg btn-outline-primary" onclick="stop()">Stop playing</button>
+            <button type="button" class="display-1 btn btn-lg btn-outline-danger" onclick="restart()">Restart Player</button>
         </div>
               
         <div class="container" style="max-width: 960px">
@@ -62,6 +63,11 @@ function play( file ) {
 function stop( ) {
     $$.get("/stop", function(data, status){
         //alert("Status: " + status);
+    });
+}
+function restart( ) {
+    $$.get("/restart", function(data, status){
+        alert("The player app is currently restarting and may take 30 seconds to restart\n\nPlease refresh this page...");
     });
 }
 

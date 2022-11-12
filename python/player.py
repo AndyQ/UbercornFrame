@@ -3,17 +3,23 @@ import argparse
 import colorsys
 import math
 import time
+import random
+import string
 from queue import Queue
-
-import comms
-import webserver
-from theme import Theme
+import socket
 
 try:
     import unicornhathd
     print("unicorn hat hd detected")
-except ImportError:
+except:
+    print("Importing Unicornhatsim")
     from unicorn_hat_sim import unicornhathd
+
+import comms
+import webserver
+from theme import Theme
+from qrcode.main import QRCode
+from qrcode import image  # noqa
 
 animating = True
 isConnected = False
@@ -21,16 +27,18 @@ theme = None
 queue = None
 
 def handleQueue():
-    global theme, queue
+    global theme, queue, hasValidAuth
     while not queue.empty():
         item = queue.get()
-        print( item )
+        #print( item )
 
         tokens = item.split(" ")
         cmd = tokens[0]
         if cmd == "CONNECT":
             theme = Theme()
             isConnected = True
+        elif cmd.startswith("DISCONNECT") and len(tokens) == 6:
+            hasValidAuth = False
         elif cmd.startswith("SET") and len(tokens) == 6:
             x = int(tokens[1])
             y = int(tokens[2])
@@ -71,6 +79,8 @@ def handleQueue():
             # Write to file
             with open( path, "wb" ) as outf:
                 outf.write(data)
+        elif cmd.startswith( "RESTART" ):
+            exit(0)
 
 
 def setPixel( x, y, r, g, b ):
@@ -97,12 +107,40 @@ def updateThemeFrame():
 
     time.sleep(delayTime/1000.0)
 
+def generateAPIKey():
+    apiKey = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(8))
+    hostname = socket.gethostname()
+    port = "8765"
+
+    # write api key to config.py
+    with open( "apikey.py", "w") as outf:
+        outf.write( 'hostname="{}"\n'.format(hostname))
+        outf.write( 'port={}\n'.format(port))
+        outf.write( 'apiKey="{}"\n'.format(apiKey))
+        
+    # print apiKey as QRCode
+    data = "{}:{}:{}".format(hostname, port, apiKey)
+    qr = QRCode()
+    qr.add_data(data)
+
+    qr.print_ascii(tty=True)
+    print( "Use the Ubercorn iOS app to scan the below BarCode to allow comms")
+    print( "")
+    print( "Or you can manually enter the following settings:")
+    print( "   hostname: {}\n   port: {}\n   apiKey:{}".format(hostname, port, apiKey))
+
+
 def main( filename ):
     global theme, queue
 
+    try:
+        from apikey import apiKey
+    except:
+        apiKey = None
+    
     queue = Queue()
 
-    comms.startWebSocket(queue)
+    comms.startWebSocket(queue,apiKey)
     webserver.startWebServer(queue)
 
     theme = Theme( filename )
@@ -127,6 +165,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='player.py')
 
     parser.add_argument('-f', '--file', help='Filename to load')
+    parser.add_argument('-g', '--generate', action='store_true', help='Generate API key (allow iOS to talk to Ubercorn over websockets)')
     args = parser.parse_args()
+
+    if args.generate:
+        generateAPIKey()
 
     main( args.file )

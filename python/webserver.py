@@ -20,7 +20,8 @@ def initWebServer():
     urls = (
     '/', 'index',
     '/play/(.*)', 'Play',
-    '/stop', 'Stop'
+    '/stop', 'Stop',
+    '/restart', 'Restart'
 
     )
 
@@ -32,6 +33,7 @@ class index:
         # Get list of gif files in images folder
         files = glob.glob('./images/*.gif')
         files = [ file[9:] for file in files ]
+        files.sort()
         return render.index(files)
 
 class Play:
@@ -44,6 +46,12 @@ class Stop:
     def GET(self):
         global dataQueue
         dataQueue.put( "STOP" )
+        return "OK"
+
+class Restart:
+    def GET(self):
+        global dataQueue
+        dataQueue.put( "RESTART" )
         return "OK"
 
 if __name__ == '__main__':
