@@ -65,5 +65,7 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Uses the camera to scan QR-Code for ease of communication setup with Ubercorn</string>
 </dict>
 </plist>

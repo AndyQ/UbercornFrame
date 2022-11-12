@@ -198,14 +198,12 @@ class PaletteView: UIView {
 
         self.setNeedsDisplay()
     }
-}
-
-
-extension PaletteView : ColorPickerDelegate {
+    
     func colorSelectionChanged(selectedColor color: UIColor) {
         currentPalette.colors[selectedIndex] = color
         colorChanged?( color )
         
         self.setNeedsDisplay()
     }
+
 }

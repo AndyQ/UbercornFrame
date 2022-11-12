@@ -16,7 +16,7 @@ extension CGFloat {
 }
 
 class ViewController: UIViewController {
-    static let menuItems = ["New file", "Load file", "Save file", "Paste image", "Create palette from image", "Disconnect from Ubercorn Frame", "Connect to Ubercorn Frame", "Settings"]
+    static let menuItems = ["New file", "Load file", "Save file", "Paste image URL", "Create palette from image", "Disconnect from Ubercorn Frame", "Connect to Ubercorn Frame", "Settings"]
 
     @IBOutlet weak var verticalStackView: UIStackView!
     @IBOutlet weak var paletteScrollView: UIScrollView!
@@ -39,6 +39,7 @@ class ViewController: UIViewController {
     let animation = Animation()
     
     var animating = false
+    var currentFilename = ""
     
     var currentFrame : ImageFrame {
         return animation.currentFrame
@@ -79,8 +80,10 @@ class ViewController: UIViewController {
         
         paletteView.chooseColor = { [unowned self] (source, rect) in
             let colorPickerVC = ColorPickerViewController()
-            colorPickerVC.delegate = self.paletteView
             colorPickerVC.modalPresentationStyle = .popover
+            colorPickerVC.colorSelected = { [weak self] color in
+                self?.paletteView.colorSelectionChanged( selectedColor:color )
+            }
             self.showPopup(colorPickerVC, sourceView: source, rect:rect )
         }
         
@@ -97,6 +100,8 @@ class ViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         frameToView(self.currentFrame)
+        
+        //runScript()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -246,6 +251,7 @@ extension ViewController {
         let controller = ArrayChoiceTableViewController(items) { [unowned self] (name) in
             if name == "New file" {
                 self.setFrames( frames: [ImageFrame()] )
+                self.currentFilename = ""
             } else if name == "Load file" {
                 self.loadFile()
             } else if name == "Save file" {
@@ -256,7 +262,7 @@ extension ViewController {
                 self.disconnectFromUbercornFrame()
             } else if name == "Settings" {
                 self.performSegue(withIdentifier: "showSettings", sender: self)
-            } else if name == "Paste image" {
+            } else if name == "Paste image URL" {
                 self.handlePasteImage()
             } else if name == "Create palette from image" {
                 self.createPaletteFromImage()
@@ -279,11 +285,12 @@ extension ViewController {
         let d = UserDefaults.standard
         let hostName = d.string(forKey: "hostName") ?? ""
         let port = d.integer(forKey: "port")
+        let apiKey = d.string(forKey: "apiKey") ?? ""
 
-        if hostName == "" || port <= 0 {
+        if hostName == "" || port <= 0 || apiKey == "" {
             self.performSegue(withIdentifier: "showSettings", sender: self)
         } else {
-            remoteServer.connect(hostName: hostName, port:port, didConnect:{ [unowned self] (connected) in
+            remoteServer.connect(hostName: hostName, port:port, apiKey:apiKey, didConnect:{ [unowned self] (connected) in
                 if connected {
                     self.connectedLabel.isHidden = false
                     self.sendToUbercornButton.isHidden = false
@@ -474,7 +481,7 @@ extension ViewController {
     
     func moveUp() {
         var tmpRow = [UIColor]()
-        var p = currentFrame.pixels
+        let p = currentFrame.pixels
         for x in 0 ..< 16 {
             for y in 0 ..< 16 {
                 if y == 0 {
@@ -492,7 +499,7 @@ extension ViewController {
     
     func moveDown() {
         var tmpRow = [UIColor]()
-        var p = currentFrame.pixels
+        let p = currentFrame.pixels
         for x in 0 ..< 16 {
             for y in stride(from:15, to:-1, by:-1) {
                 if y == 15 {
@@ -510,7 +517,7 @@ extension ViewController {
     
     func moveLeft() {
         var tmpRow = [UIColor]()
-        var p = currentFrame.pixels
+        let p = currentFrame.pixels
         for x in 0 ..< 16 {
             for y in 0 ..< 16 {
                 if x == 0 {
@@ -529,7 +536,7 @@ extension ViewController {
 
     func moveRight() {
         var tmpRow = [UIColor]()
-        var p = currentFrame.pixels
+        let p = currentFrame.pixels
         for x in stride(from:15, to:-1, by:-1) {
             for y in 0 ..< 16 {
                 if x == 15 {
@@ -553,7 +560,7 @@ extension ViewController : UIDocumentPickerDelegate {
     
     func saveFile( saveLocally: Bool = true ) {
         
-        showSubmitTextFieldAlert(title: "Save file", message: "Enter filename", placeholder: "filename") { [unowned self] (name) in
+        showSubmitTextFieldAlert(title: "Save file", message: "Enter filename", placeholder: "filename", defaultText: currentFilename ) { [unowned self] (name) in
             guard var name = name else { return }
             
             if !name.hasSuffix(".gif") {
@@ -621,6 +628,7 @@ extension ViewController : UIDocumentPickerDelegate {
         } else {
             if let frames = UIImage.gifImage(withURL:url) {
                 setFrames( frames: frames)
+                currentFilename = url.deletingPathExtension().lastPathComponent
             }
         }
     }
@@ -665,6 +673,7 @@ extension ViewController : UIDocumentPickerDelegate {
         
         if zf.foundImages.count == 1, let key = zf.foundImages.keys.first, let frames = zf.foundImages.values.first {
             setFrames( frames:frames)
+            currentFilename = url.deletingPathExtension().lastPathComponent
 
             let animation = Animation(frames:frames)
             let imageData = animation.generateGif()
@@ -706,6 +715,7 @@ extension ViewController {
     func showSubmitTextFieldAlert(title: String,
                                   message: String,
                                   placeholder: String,
+                                  defaultText:String = "",
                                   completion: @escaping (_ userInput: String?) -> Void) {
         
         let alertController = UIAlertController(title: title,
@@ -714,6 +724,7 @@ extension ViewController {
         
         alertController.addTextField { (textField) in
             textField.placeholder = placeholder
+            textField.text = defaultText
             textField.clearButtonMode = .whileEditing
         }
         
@@ -731,5 +742,122 @@ extension ViewController {
         
         present(alertController, animated: true)
     }
+}
 
+
+var step = 0
+extension ViewController {
+    func runScript() {
+
+        for x in 0 ..< 16 {
+            for y in 0 ..< 16 {
+                let c = getColorForSwirlEffect(x:x, y:y, step:step)
+                //setPixel( x: x, y: y, c: c )
+                self.currentFrame.pixels[x][y] = c
+            }
+        }
+        self.frameToView(currentFrame)
+
+        step += 2
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.05, execute: {
+            self.runScript()
+        })
+
+    }
+    
+    func getColorForTunnelEffect( x px: Int, y py: Int, step: Int ) -> UIColor {
+        let speed : Float = Float(step) / 100.0
+        var x : Float = Float(px) - (16 / 2)
+        var y : Float = Float(py) - (16 / 2)
+        let xo : Float = Float(sin(Float(step) / 27.0) * 2)
+        let yo : Float = Float(cos(Float(step) / 18.0) * 2)
+        x += xo
+        y += yo
+        var angle : Float
+        if y == 0 {
+            if x < 0 {
+                angle = -(Float.pi / 2)
+            } else {
+                angle = (Float.pi / 2)
+            }
+        } else {
+            angle = atan(x / y)
+        }
+        if y > 0 {
+            angle += Float.pi
+        }
+        angle /= 2 * Float.pi  // convert angle to 0...1 range
+        let hyp = Float(sqrt(pow(x, 2) + pow(y, 2)))
+        var shade  : Float = hyp / 2.1
+        if shade > 1 {
+            shade = 1
+        }
+        angle += speed
+        let depth  : Float = speed + (hyp / 10)
+        var col1 = hue_to_rgb(step % 255)
+        col1 = (col1.0 * 0.8, col1.1 * 0.8, col1.2 * 0.8)
+        var col2 = hue_to_rgb(step % 255)
+        col2 = (col2.0 * 0.3, col2.1 * 0.3, col2.2 * 0.3)
+        var col = Int(abs(angle * 6.0)) % 2 == 0 ? col1 : col2
+
+        let td : Float = Int(abs(depth * 3.0)) % 2 == 0  ? 0.3 : 0
+        col = (col.0 + td, col.1 + td, col.2 + td)
+        col = (col.0 * shade, col.1 * shade, col.2 * shade)
+        
+        return UIColor(red: CGFloat(col.0)/255, green: CGFloat(col.1)/255, blue: CGFloat(col.2)/255, alpha: 1.0)
+    }
+    
+    func hue_to_rgb( _ i : Int ) -> (Float,Float,Float) {
+        let h = Float(i) / 255.0
+        let s : Float = 1
+        let v : Float = 1
+        
+        let h_i = Int(h*6)
+        let f = h*6 - Float(h_i)
+        let p = v * (1 - s)
+        let q = v * (1 - f*s)
+        let t = v * (1 - (1 - f) * s)
+        var r : Float = 0
+        var g : Float = 0
+        var b : Float = 0
+
+        if h_i == 0 {
+            (r, g, b) = (v, t, p)
+        } else if h_i == 1 {
+            (r, g, b) = (q, v, p)
+        } else if h_i == 2 {
+            (r, g, b) = (p, v, t)
+        } else if h_i == 3 {
+            (r, g, b) = (p, q, v)
+        } else if h_i == 4 {
+            (r, g, b) = (t, p, v)
+        } else if h_i == 5 {
+            (r, g, b) = (v, p, q)
+        }
+        
+        return (r*255, g*255, b*255)
+
+    }
+    
+    func getColorForSwirlEffect( x px: Int, y py: Int, step: Int ) -> UIColor {
+        let x : Float = Float(px) - (16 / 2)
+        let y : Float = Float(py) - (16 / 2)
+        let dist = sqrt(pow(x, 2) + pow(y, 2)) / 2.0
+        let angle = (Float(step) / 10.0) + (dist * 1.5)
+        let s = sin(angle)
+        let c = cos(angle)
+        let xs = x * c - y * s
+        let ys = x * s + y * c
+        var r : CGFloat = CGFloat(abs(xs + ys))
+        r = r * 12.0
+        
+        var g : CGFloat = r + CGFloat(s*130)
+        var b : CGFloat = r + CGFloat(c * 130)
+
+        r = max(0, min(255, r))
+        g = max(0, min(255, g))
+        b = max(0, min(255, b))
+        
+        return UIColor(red: r/255, green: g/255, blue: b/255, alpha: 1.0)
+    }
 }

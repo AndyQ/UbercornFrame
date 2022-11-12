@@ -149,33 +149,47 @@ extension UIImage {
         let size = getSizeOfImage(source: source)
         
         let count = CGImageSourceGetCount(source)
-        var images = [ImageFrame]()
+        var frames = [ImageFrame]()
         
         for i in 0..<count {
-            let image : CGImage?
-            if size.width != size.height || Int(size.width)%16 != 0 {
+            var images = [CGImage]()
+            
+            // This may be an 16x(16*n) image - e.g a bitmap of 16px width and a multiple of 16px height
+            // Which we treat as a single image with multiple frames
+            if size.width == 16 && Int(size.height) % 16 == 0 {
+                guard let image = CGImageSourceCreateImageAtIndex(source, i, nil) else { continue }
+                for y in stride( from:0, to:size.height, by:16) {
+                    if let croppedCGImage = image.cropping(to: CGRect(x: 0, y: y, width: 16, height: 16)) {
+                        images.append(croppedCGImage)
+                    }
+                }
+            } else if size.width != size.height || Int(size.width)%16 != 0 {
                 let options: [NSString: AnyObject] = [
                     kCGImageSourceThumbnailMaxPixelSize: NSNumber(integerLiteral:16),
                     kCGImageSourceCreateThumbnailFromImageAlways: NSNumber(booleanLiteral: true),
                     kCGImageSourceCreateThumbnailWithTransform:NSNumber(booleanLiteral: false)
                 ]
-                image = CGImageSourceCreateThumbnailAtIndex(source, i, options as CFDictionary)
+                if let image = CGImageSourceCreateThumbnailAtIndex(source, i, options as CFDictionary) {
+                    images.append( image )
+                }
             } else {
-                image = CGImageSourceCreateImageAtIndex(source, i, nil)
+                if let image = CGImageSourceCreateImageAtIndex(source, i, nil) {
+                    images.append( image )
+                }
             }
             
-            if let image = image {
+            for image in images {
                 
                 let frame = getImageAsFrame( image )
                 
                 let delaySeconds = UIImage.delayForImageAtIndex(index: Int(i), source: source)
                 frame.delay = Int(delaySeconds * 1000.0)
                 
-                images.append(frame)
+                frames.append(frame)
             }
         }
         
-        return images
+        return frames
     }
     
     class func getImageAsFrame( _ image: CGImage ) -> ImageFrame {

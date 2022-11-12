@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,27 +18,24 @@
 		A11448E321AC9DF3009835AA /* LocalFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11448E221AC9DF3009835AA /* LocalFileViewController.swift */; };
 		A117D34C21A551BF00EDBB5D /* UIImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A117D34B21A551BF00EDBB5D /* UIImageExt.swift */; };
 		A147CF7321B84FB90074EB4E /* GameFrameArchiveHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A147CF7221B84FB90074EB4E /* GameFrameArchiveHandler.swift */; };
-		A147CF7521B856470074EB4E /* invaders.zip in Resources */ = {isa = PBXBuildFile; fileRef = A147CF7421B856470074EB4E /* invaders.zip */; };
+		A147CF7721B95F7B0074EB4E /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A147CF7621B95F7B0074EB4E /* ColorPickerViewController.swift */; };
 		A14B8CCA21A35C3100EC0C4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14B8CC921A35C3100EC0C4B /* AppDelegate.swift */; };
 		A14B8CCC21A35C3100EC0C4B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14B8CCB21A35C3100EC0C4B /* ViewController.swift */; };
 		A14B8CCF21A35C3100EC0C4B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A14B8CCD21A35C3100EC0C4B /* Main.storyboard */; };
 		A14B8CD121A35C3300EC0C4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A14B8CD021A35C3300EC0C4B /* Assets.xcassets */; };
 		A14B8CD421A35C3300EC0C4B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A14B8CD221A35C3300EC0C4B /* LaunchScreen.storyboard */; };
+		A14BFAE821BD45C100C629D9 /* BarcodeScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14BFAE721BD45C100C629D9 /* BarcodeScanViewController.swift */; };
 		A15BAFEB21A4A33C00B2394A /* palettes.json in Resources */ = {isa = PBXBuildFile; fileRef = A15BAFEA21A4A33C00B2394A /* palettes.json */; };
 		A15BAFEF21A4A72E00B2394A /* UIColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15BAFEE21A4A72E00B2394A /* UIColorExt.swift */; };
 		A15BAFF121A4A74400B2394A /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15BAFF021A4A74400B2394A /* Palette.swift */; };
 		A15BAFF321A4B8DC00B2394A /* ArrayChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15BAFF221A4B8DC00B2394A /* ArrayChoiceViewController.swift */; };
 		A15BAFF521A5420800B2394A /* ImageFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15BAFF421A5420800B2394A /* ImageFrame.swift */; };
 		A15BAFF721A5461200B2394A /* ArrayExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15BAFF621A5461200B2394A /* ArrayExt.swift */; };
-		A1B9622B21B59CEC002BF8C1 /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B9622A21B59CEC002BF8C1 /* ColorPickerViewController.swift */; };
-		A3A515A93523D64AC73E42B8 /* Pods_GameFrame.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 403EF7B361D51999C1E00202 /* Pods_GameFrame.framework */; };
-		FD4933A0132DFD1F25B116BF /* Pods_UbercornFrame.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9448B8A408847F4AF6BED3C /* Pods_UbercornFrame.framework */; };
+		A1F6AB15291FC5B500430FE8 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = A1F6AB14291FC5B500430FE8 /* Starscream */; };
+		A1F6AB18291FC5C200430FE8 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = A1F6AB17291FC5C200430FE8 /* ZIPFoundation */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		11BBBF4AA7F15A74C06A4982 /* Pods-GameFrame.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GameFrame.release.xcconfig"; path = "Pods/Target Support Files/Pods-GameFrame/Pods-GameFrame.release.xcconfig"; sourceTree = "<group>"; };
-		403EF7B361D51999C1E00202 /* Pods_GameFrame.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GameFrame.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6A73729584D2A50B4D091DA2 /* Pods-UbercornFrame.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UbercornFrame.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UbercornFrame/Pods-UbercornFrame.debug.xcconfig"; sourceTree = "<group>"; };
 		A101F2BB21A5EF48002C020B /* PaletteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteView.swift; sourceTree = "<group>"; };
 		A101F2BD21A5F2DB002C020B /* PaletteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteManager.swift; sourceTree = "<group>"; };
 		A101F2BF21A6BC05002C020B /* RemoteServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServer.swift; sourceTree = "<group>"; };
@@ -50,7 +47,7 @@
 		A11448E221AC9DF3009835AA /* LocalFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileViewController.swift; sourceTree = "<group>"; };
 		A117D34B21A551BF00EDBB5D /* UIImageExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExt.swift; sourceTree = "<group>"; };
 		A147CF7221B84FB90074EB4E /* GameFrameArchiveHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFrameArchiveHandler.swift; sourceTree = "<group>"; };
-		A147CF7421B856470074EB4E /* invaders.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = invaders.zip; path = ../../python/images/invaders.zip; sourceTree = "<group>"; };
+		A147CF7621B95F7B0074EB4E /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		A14B8CC621A35C3100EC0C4B /* UbercornFrame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UbercornFrame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A14B8CC921A35C3100EC0C4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A14B8CCB21A35C3100EC0C4B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -58,16 +55,13 @@
 		A14B8CD021A35C3300EC0C4B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A14B8CD321A35C3300EC0C4B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A14B8CD521A35C3300EC0C4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A14BFAE721BD45C100C629D9 /* BarcodeScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScanViewController.swift; sourceTree = "<group>"; };
 		A15BAFEA21A4A33C00B2394A /* palettes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = palettes.json; sourceTree = "<group>"; };
 		A15BAFEE21A4A72E00B2394A /* UIColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExt.swift; sourceTree = "<group>"; };
 		A15BAFF021A4A74400B2394A /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		A15BAFF221A4B8DC00B2394A /* ArrayChoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayChoiceViewController.swift; sourceTree = "<group>"; };
 		A15BAFF421A5420800B2394A /* ImageFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFrame.swift; sourceTree = "<group>"; };
 		A15BAFF621A5461200B2394A /* ArrayExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExt.swift; sourceTree = "<group>"; };
-		A1B9622A21B59CEC002BF8C1 /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
-		E9448B8A408847F4AF6BED3C /* Pods_UbercornFrame.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UbercornFrame.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EE2CE047DD41B833AB9ABCBB /* Pods-UbercornFrame.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UbercornFrame.release.xcconfig"; path = "Pods/Target Support Files/Pods-UbercornFrame/Pods-UbercornFrame.release.xcconfig"; sourceTree = "<group>"; };
-		EFC955837556028DD906F506 /* Pods-GameFrame.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GameFrame.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GameFrame/Pods-GameFrame.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,23 +69,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3A515A93523D64AC73E42B8 /* Pods_GameFrame.framework in Frameworks */,
-				FD4933A0132DFD1F25B116BF /* Pods_UbercornFrame.framework in Frameworks */,
+				A1F6AB15291FC5B500430FE8 /* Starscream in Frameworks */,
+				A1F6AB18291FC5C200430FE8 /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8E47854FFABD54B71D7DBD79 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				403EF7B361D51999C1E00202 /* Pods_GameFrame.framework */,
-				E9448B8A408847F4AF6BED3C /* Pods_UbercornFrame.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		A147CF6F21B847FF0074EB4E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,9 +93,10 @@
 			isa = PBXGroup;
 			children = (
 				A14B8CCB21A35C3100EC0C4B /* ViewController.swift */,
+				A14BFAE721BD45C100C629D9 /* BarcodeScanViewController.swift */,
 				A11448E221AC9DF3009835AA /* LocalFileViewController.swift */,
 				A101F2C321A82B5C002C020B /* SettingsViewController.swift */,
-				A1B9622A21B59CEC002BF8C1 /* ColorPickerViewController.swift */,
+				A147CF7621B95F7B0074EB4E /* ColorPickerViewController.swift */,
 				A15BAFF221A4B8DC00B2394A /* ArrayChoiceViewController.swift */,
 			);
 			path = ViewControllers;
@@ -132,8 +118,6 @@
 			children = (
 				A14B8CC821A35C3100EC0C4B /* UbercornFrame */,
 				A14B8CC721A35C3100EC0C4B /* Products */,
-				FE63B640464960E016A1244B /* Pods */,
-				8E47854FFABD54B71D7DBD79 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -160,7 +144,6 @@
 				A14B8CD021A35C3300EC0C4B /* Assets.xcassets */,
 				A14B8CD221A35C3300EC0C4B /* LaunchScreen.storyboard */,
 				A14B8CD521A35C3300EC0C4B /* Info.plist */,
-				A147CF7421B856470074EB4E /* invaders.zip */,
 				A15BAFE921A4A30F00B2394A /* Resources */,
 			);
 			path = UbercornFrame;
@@ -174,17 +157,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		FE63B640464960E016A1244B /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				EFC955837556028DD906F506 /* Pods-GameFrame.debug.xcconfig */,
-				11BBBF4AA7F15A74C06A4982 /* Pods-GameFrame.release.xcconfig */,
-				6A73729584D2A50B4D091DA2 /* Pods-UbercornFrame.debug.xcconfig */,
-				EE2CE047DD41B833AB9ABCBB /* Pods-UbercornFrame.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -192,17 +164,19 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A14B8CD821A35C3300EC0C4B /* Build configuration list for PBXNativeTarget "UbercornFrame" */;
 			buildPhases = (
-				310267C756E5E6888F2C3F1F /* [CP] Check Pods Manifest.lock */,
 				A14B8CC221A35C3100EC0C4B /* Sources */,
 				A14B8CC321A35C3100EC0C4B /* Frameworks */,
 				A14B8CC421A35C3100EC0C4B /* Resources */,
-				0F2CF7F1B49970A30422AEB8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = UbercornFrame;
+			packageProductDependencies = (
+				A1F6AB14291FC5B500430FE8 /* Starscream */,
+				A1F6AB17291FC5C200430FE8 /* ZIPFoundation */,
+			);
 			productName = GameFrame;
 			productReference = A14B8CC621A35C3100EC0C4B /* UbercornFrame.app */;
 			productType = "com.apple.product-type.application";
@@ -214,11 +188,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1410;
 				ORGANIZATIONNAME = "Andy Qua";
 				TargetAttributes = {
 					A14B8CC521A35C3100EC0C4B = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = "";
 					};
 				};
 			};
@@ -231,6 +206,10 @@
 				Base,
 			);
 			mainGroup = A14B8CBD21A35C3100EC0C4B;
+			packageReferences = (
+				A1F6AB13291FC5B500430FE8 /* XCRemoteSwiftPackageReference "Starscream" */,
+				A1F6AB16291FC5C200430FE8 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+			);
 			productRefGroup = A14B8CC721A35C3100EC0C4B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -246,7 +225,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A14B8CD421A35C3300EC0C4B /* LaunchScreen.storyboard in Resources */,
-				A147CF7521B856470074EB4E /* invaders.zip in Resources */,
 				A14B8CD121A35C3300EC0C4B /* Assets.xcassets in Resources */,
 				A14B8CCF21A35C3100EC0C4B /* Main.storyboard in Resources */,
 				A15BAFEB21A4A33C00B2394A /* palettes.json in Resources */,
@@ -254,55 +232,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		0F2CF7F1B49970A30422AEB8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-UbercornFrame/Pods-UbercornFrame-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
-				"${BUILT_PRODUCTS_DIR}/ZIPFoundation/ZIPFoundation.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZIPFoundation.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UbercornFrame/Pods-UbercornFrame-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		310267C756E5E6888F2C3F1F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-UbercornFrame-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A14B8CC221A35C3100EC0C4B /* Sources */ = {
@@ -314,7 +243,6 @@
 				A101F2C021A6BC05002C020B /* RemoteServer.swift in Sources */,
 				A147CF7321B84FB90074EB4E /* GameFrameArchiveHandler.swift in Sources */,
 				A15BAFEF21A4A72E00B2394A /* UIColorExt.swift in Sources */,
-				A1B9622B21B59CEC002BF8C1 /* ColorPickerViewController.swift in Sources */,
 				A11448DF21A84A76009835AA /* StringExt.swift in Sources */,
 				A117D34C21A551BF00EDBB5D /* UIImageExt.swift in Sources */,
 				A15BAFF321A4B8DC00B2394A /* ArrayChoiceViewController.swift in Sources */,
@@ -324,9 +252,11 @@
 				A15BAFF721A5461200B2394A /* ArrayExt.swift in Sources */,
 				A15BAFF121A4A74400B2394A /* Palette.swift in Sources */,
 				A101F2C421A82B5C002C020B /* SettingsViewController.swift in Sources */,
+				A14BFAE821BD45C100C629D9 /* BarcodeScanViewController.swift in Sources */,
 				A101F2C221A6E72E002C020B /* Animation.swift in Sources */,
 				A11448E321AC9DF3009835AA /* LocalFileViewController.swift in Sources */,
 				A101F2C621A82D63002C020B /* UIViewControllerExt.swift in Sources */,
+				A147CF7721B95F7B0074EB4E /* ColorPickerViewController.swift in Sources */,
 				A101F2BC21A5EF48002C020B /* PaletteView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -379,6 +309,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -440,6 +371,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -471,7 +403,6 @@
 		};
 		A14B8CD921A35C3300EC0C4B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6A73729584D2A50B4D091DA2 /* Pods-UbercornFrame.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -483,14 +414,13 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.andyqua.UbercornFrame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		A14B8CDA21A35C3300EC0C4B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EE2CE047DD41B833AB9ABCBB /* Pods-UbercornFrame.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -502,7 +432,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.andyqua.UbercornFrame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -529,6 +459,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A1F6AB13291FC5B500430FE8 /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/Starscream";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+		A1F6AB16291FC5C200430FE8 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.9;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A1F6AB14291FC5B500430FE8 /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1F6AB13291FC5B500430FE8 /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
+		};
+		A1F6AB17291FC5C200430FE8 /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1F6AB16291FC5C200430FE8 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A14B8CBE21A35C3100EC0C4B /* Project object */;
 }

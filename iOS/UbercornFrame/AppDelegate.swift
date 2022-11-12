@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func testZipFileExtract() {
         if let url = Bundle.main.url(forResource: "invaders", withExtension: "zip" ) {
             print( "Extracting \(url)" )
-            let zf = GameFrameArchiveHandler(zipFileURL: url)
+            let _ = GameFrameArchiveHandler(zipFileURL: url)
             print( "Done" )
         }
 

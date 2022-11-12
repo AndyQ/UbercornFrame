@@ -118,37 +118,14 @@ class GameFrameArchiveHandler {
         let imageName = sortedList[0].deletingLastPathComponent().lastPathComponent
         var frames = [ImageFrame]()
         print( "In folder \(imageName) we have:" )
-        
-        if sortedList.count == 1 {
-            // OK, We have a single bitmap, probably contains multiple frames
-            // So, split it into single frames
-            frames = splitBMPIntoFrames( url:sortedList[0] )
+        for imageURL in sortedList {
+            print( "    \(imageURL.lastPathComponent)" )
             
-        } else {
-            for imageURL in sortedList {
-                print( "    \(imageURL.lastPathComponent)" )
-                
-                if let imageFrame = UIImage.gifImage(withURL: imageURL)?[0] {
-                    frames.append( imageFrame )
-                }
+            if let imageFrames = UIImage.gifImage(withURL: imageURL) {
+                frames.append( contentsOf:imageFrames )
             }
         }
 
         self.foundImages[imageName] = frames
-    }
-    
-    private func splitBMPIntoFrames( url: URL ) -> [ImageFrame] {
-        guard let image = UIImage(contentsOfFile: url.path ) else { return [] }
-        
-        let x :CGFloat = 0
-        var frames = [ImageFrame]()
-        for y in stride( from:0, to:image.size.height, by:16) {
-            if let croppedCGImage = image.cgImage?.cropping(to: CGRect(x: x, y: y, width: 16, height: 16)) {
-                let imageFrame = UIImage.getImageAsFrame(croppedCGImage)
-                frames.append(imageFrame)
-            }
-        }
-        
-        return frames
     }
 }
