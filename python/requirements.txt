@@ -1,6 +1,6 @@
-Pillow==8.1.2
+Pillow==8.2.0
 pygame==2.0.0.dev6
 unicorn-hat-sim==1.0.0
-websockets==7.0
+websockets==9.1
 web.py==0.40
 qrcode==6.0
