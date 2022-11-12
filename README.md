@@ -23,3 +23,9 @@ Can import images via Copy/Paste.  If a pasted image is a square and the sides a
 The ColorPickerViewController is a modified version of Christian Zimmermann's iOS_Swift_ColorPicker (https://github.com/Christian1313/iOS_Swift_ColorPicker)
 
 Connects to the Ubercorn (running the above Python app) over Websockets - powered by the Starscream sockets library (https://github.com/daltoniam/Starscream)
+
+# Mounted
+This looks really neat when mounted in a cheap IKEA frame - similar to the GameFrame (https://ledseq.com/)
+
+For a description of how to create one, see https://johnmccabe.net/technology/projects/ubercorn-gameframe-pt1/<br>
+Also includes links to 3D Printer STL Files.
