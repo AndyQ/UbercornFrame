@@ -1,4 +1,4 @@
-Pillow==9.3.0
+Pillow==10.0.1
 pygame==2.0.0.dev6
 unicorn-hat-sim==1.0.0
 websockets==9.1
